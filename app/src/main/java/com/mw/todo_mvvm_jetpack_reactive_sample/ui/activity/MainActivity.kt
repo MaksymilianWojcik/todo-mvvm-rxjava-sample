@@ -2,6 +2,7 @@ package com.mw.todo_mvvm_jetpack_reactive_sample.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?
     ) {
         Timber.d("Destination changed: ${controller.graph}, dest: $destination")
+        when (destination.id) {
+            R.id.newTaskFragment -> binding.bottomNav.isVisible = false
+            else -> binding.bottomNav.isVisible = true
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

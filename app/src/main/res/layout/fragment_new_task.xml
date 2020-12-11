@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.NewTaskViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +23,6 @@
                 android:paddingLeft="@dimen/grid_16"
                 android:paddingTop="@dimen/grid_16"
                 android:paddingRight="@dimen/grid_16"
-
                 android:paddingBottom="@dimen/grid_16" >
 
                 <EditText
@@ -32,7 +33,7 @@
                     android:hint="@string/hint_title"
                     android:imeOptions="flagNoExtractUi"
                     android:maxLines="1"
-
+                    android:text="@={viewModel.title}"
                     android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
@@ -43,7 +44,7 @@
                     android:layout_height="350dp"
                     android:gravity="top"
                     android:hint="@string/hint_task_description"
-
+                    android:text="@={viewModel.description}"
                     android:imeOptions="flagNoExtractUi" />
             </LinearLayout>
 
@@ -55,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/grid_16"
             android:src="@drawable/ic_baseline_check_24"
+            android:onClick="@{() -> viewModel.createTask()}"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

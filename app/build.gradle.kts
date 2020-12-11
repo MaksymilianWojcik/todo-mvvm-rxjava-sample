@@ -58,6 +58,8 @@ dependencies {
     implementation(Libs.NAVIGATION_UI)
     implementation(Libs.REACTIVE_STREAMS)
 
+    implementation(Libs.TIMBER)
+
 
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")

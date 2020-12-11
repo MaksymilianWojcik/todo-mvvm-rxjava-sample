@@ -14,4 +14,6 @@ object Versions {
     // Architecture Components
     const val LIFECYCLE = "2.2.0"
     const val NAVIGATION = "2.3.2"
+
+    const val TIMBER = "4.7.1"
 }

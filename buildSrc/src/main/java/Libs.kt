@@ -13,4 +13,6 @@ object Libs {
     const val REACTIVE_STREAMS = "androidx.lifecycle:lifecycle-reactivestreams-ktx:${Versions.LIFECYCLE}"
     const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
+
+    const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
 }

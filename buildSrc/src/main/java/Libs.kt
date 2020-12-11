@@ -15,4 +15,13 @@ object Libs {
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
 
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
+
+    // Dagger
+    // di
+    const val HILT = "com.google.dagger:hilt-android:${Versions.HILT}"
+    const val HILT_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
+
+    // di + jetpack
+    const val HILT_VIEWMODEL = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_VIEWMODEL}"
+    const val HILT_VIEWMODEL_COMPILER = "androidx.hilt:hilt-compiler:${Versions.HILT_VIEWMODEL}"
 }

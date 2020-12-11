@@ -3,6 +3,8 @@ plugins {
     id("com.google.gms.google-services")
     kotlin("android")
     id("androidx.navigation.safeargs.kotlin")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -59,6 +61,12 @@ dependencies {
     implementation(Libs.REACTIVE_STREAMS)
 
     implementation(Libs.TIMBER)
+
+    // dagger
+    implementation(Libs.HILT)
+    implementation(Libs.HILT_VIEWMODEL)
+    kapt(Libs.HILT_COMPILER)
+    kapt(Libs.HILT_VIEWMODEL_COMPILER)
 
 
     testImplementation("junit:junit:4.+")

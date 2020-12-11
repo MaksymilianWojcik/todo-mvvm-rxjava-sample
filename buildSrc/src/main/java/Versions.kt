@@ -16,4 +16,6 @@ object Versions {
     const val NAVIGATION = "2.3.2"
 
     const val TIMBER = "4.7.1"
+    const val HILT = "2.28-alpha"
+    const val HILT_VIEWMODEL = "1.0.0-alpha02"
 }

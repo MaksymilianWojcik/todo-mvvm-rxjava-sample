@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tasks_graph"
+    app:startDestination="@id/tasksFragment">
+
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment.TasksFragment"
+        android:label="@string/menu_tasks_title"
+        tools:layout="@layout/fragment_tasks" />
+
+</navigation>

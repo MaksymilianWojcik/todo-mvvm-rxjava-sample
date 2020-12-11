@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tasks_graph"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="1"
+        android:title="@string/menu_tasks_title" />
+
+    <item
+        android:id="@+id/settings_graph"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="2"
+        android:title="@string/menu_settings_title" />
+</menu>

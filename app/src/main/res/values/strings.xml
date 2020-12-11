@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">todo-mvvm-jetpack-reactive-sample</string>
+    <string name="menu_tasks_title">Tasks</string>
+    <string name="menu_settings_title">Settings</string>
 </resources>

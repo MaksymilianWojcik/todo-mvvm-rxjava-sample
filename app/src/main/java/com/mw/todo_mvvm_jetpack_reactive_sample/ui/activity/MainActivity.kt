@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.ActivityMainBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.setupWithNavController
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         )
         controller.observe(this) { navController ->
             // TODO: Add custom toolbar
+            setupActionBarWithNavController(navController)
             currentNavController?.value?.removeOnDestinationChangedListener(this)
             currentNavController = controller
             currentNavController?.value?.addOnDestinationChangedListener(this)

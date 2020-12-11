@@ -18,4 +18,6 @@ object Versions {
     const val TIMBER = "4.7.1"
     const val HILT = "2.28-alpha"
     const val HILT_VIEWMODEL = "1.0.0-alpha02"
+    const val RX_JAVA = "2.2.19"
+    const val RX_ANDROID = "2.1.1"
 }

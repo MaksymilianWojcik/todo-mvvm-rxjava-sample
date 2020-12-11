@@ -68,6 +68,10 @@ dependencies {
     kapt(Libs.HILT_COMPILER)
     kapt(Libs.HILT_VIEWMODEL_COMPILER)
 
+    // rxjava
+    implementation(Libs.RX_JAVA)
+    implementation(Libs.RX_ANDROID)
+
 
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")

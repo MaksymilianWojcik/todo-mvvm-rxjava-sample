@@ -39,9 +39,32 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
                 if (error != null) {
                     emitter.onError(error)
                 } else {
-                    snapshot?.let {
-                        val tasksList = it.toObjects(Task::class.java)
+                    snapshot?.let { querySnapshot ->
+                        val tasksList = querySnapshot.toObjects(Task::class.java)
                         emitter.onNext(tasksList)
+                    } ?: emitter.onError(Throwable("Empty snapshot"))
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns task list observable with real time firestore updates with their ids
+     */
+    fun observeTasksWithTheirIds(): Observable<List<Task>> {
+        return Observable.create { emitter ->
+            tasksRef.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    emitter.onError(error)
+                } else {
+                    snapshot?.let { querySnapshot ->
+                        val tasksListTemp: MutableList<Task> = mutableListOf()
+                        for (docSnapshot in querySnapshot) {
+                            val task = docSnapshot.toObject(Task::class.java)
+                            task.id = docSnapshot.id
+                            tasksListTemp.add(task)
+                        }
+                        emitter.onNext(tasksListTemp)
                     } ?: emitter.onError(Throwable("Empty snapshot"))
                 }
             }
@@ -52,7 +75,6 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
      * Creates a new task in firestore. This provides offline syncing that cannot be turned off
      */
     fun createTaskWithOfflineSyncing(task: Task): Completable {
-        Timber.d("Creating new task")
         return Completable.create { emitter ->
             tasksRef.add(task).addOnSuccessListener { documentReference ->
                 // in case we would need uuid of inserted task
@@ -80,6 +102,22 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
                 }
             }.addOnFailureListener { e ->
                 if (!emitter.isDisposed) emitter.onError(e)
+            }
+        }
+    }
+
+    /**
+     * Creates a new task in firestore. This provides offline syncing that cannot be turned off and sets document id as task
+     * param
+     */
+    fun createTaskWithOfflineSyncingAndSetId(task: Task): Completable {
+        val taskDoc = tasksRef.document()
+        task.id = taskDoc.id
+        return Completable.create { emitter ->
+            taskDoc.set(task).addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener { e ->
+                emitter.onError(e)
             }
         }
     }

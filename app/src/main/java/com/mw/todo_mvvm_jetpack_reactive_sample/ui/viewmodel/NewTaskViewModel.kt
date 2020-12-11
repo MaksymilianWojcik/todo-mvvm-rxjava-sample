@@ -24,6 +24,9 @@ class NewTaskViewModel @ViewModelInject constructor(
     private val _snackbarMessage = SingleLiveEvent<Int>()
     val snackbarMessage = _snackbarMessage
 
+    private val _closeScreen = MutableLiveData<Unit>()
+    val closeScreen = _closeScreen
+
     // Two-way databinding
     // TODO: Model
     val title = MutableLiveData<String>()
@@ -46,6 +49,7 @@ class NewTaskViewModel @ViewModelInject constructor(
                         Timber.d("Created new meeting")
                         _loadingData.value = false
                         _snackbarMessage.value = R.string.task_added_message
+                        _closeScreen.value = Unit
                     }, {
                         _loadingData.value = false
                         Timber.e("Failed to create new meeting: $it")

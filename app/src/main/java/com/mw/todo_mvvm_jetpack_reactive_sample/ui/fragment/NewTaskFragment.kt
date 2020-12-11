@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.FragmentNewTaskBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.NewTaskViewModel
@@ -32,10 +34,17 @@ class NewTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
         setupSnackbar()
     }
 
     private fun setupSnackbar() {
         view?.setupSnackbar(this, newTaskViewModel.snackbarMessage, Snackbar.LENGTH_SHORT)
+    }
+
+    private fun setupUI() {
+        newTaskViewModel.closeScreen.observe(viewLifecycleOwner) {
+            findNavController().popBackStack()
+        }
     }
 }

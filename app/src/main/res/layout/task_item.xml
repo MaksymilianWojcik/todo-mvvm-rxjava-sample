@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="task"
+            type="com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task" />
+
+        <variable
+            name="viewModel"
+            type="com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.TasksViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/grid_16"
+        android:paddingRight="@dimen/grid_16"
+        android:paddingBottom="@dimen/grid_16"
+        android:paddingTop="@dimen/grid_16" >
+
+        <CheckBox
+            android:id="@+id/complete_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:checked="@{task.isCompleted}" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/grid_16"
+            android:layout_marginStart="@dimen/grid_16"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@{task.title}"
+            app:completedTask="@{task.isCompleted}" />
+    </LinearLayout>
+</layout>

@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.FragmentTasksBinding
+import com.mw.todo_mvvm_jetpack_reactive_sample.ui.adapters.TasksAdapter
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +20,8 @@ class TasksFragment : Fragment() {
 
     private lateinit var dataBinding: FragmentTasksBinding
     private val tasksViewModel: TasksViewModel by viewModels()
+
+    private lateinit var tasksAdapter: TasksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +37,14 @@ class TasksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
         setupUI()
+    }
+
+    private fun setupRecyclerView() {
+        // TODO: bindingadapter for this
+        tasksAdapter = TasksAdapter(tasksViewModel)
+        dataBinding.tasksList.adapter = tasksAdapter
     }
 
     private fun setupUI() {
@@ -42,6 +53,9 @@ class TasksFragment : Fragment() {
                 is TasksNavigationDestination.NewTask -> navigateToNewTask()
                 else -> Timber.w("Navigation destination not handled")
             }
+        }
+        tasksViewModel.tasksList.observe(viewLifecycleOwner) {
+            tasksAdapter.submitList(it)
         }
     }
 

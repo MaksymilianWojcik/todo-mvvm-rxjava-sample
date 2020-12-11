@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "340977657878",
+    "project_id": "todo-mvvm-jetpack-reactive",
+    "storage_bucket": "todo-mvvm-jetpack-reactive.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340977657878:android:b434f212a2aa2b7333ed37",
+        "android_client_info": {
+          "package_name": "com.mw.todo_mvvm_jetpack_reactive_sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340977657878-9itqqqop67klc6keaepfjeng4h04909l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmTVxQIiXTBMA4AeMYRnwakXkc4qAo-yU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340977657878-9itqqqop67klc6keaepfjeng4h04909l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

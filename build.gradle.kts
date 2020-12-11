@@ -10,6 +10,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:${Versions.GRADLE_PLUGIN}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}")
         classpath("com.google.gms:google-services:${Versions.GOOGLE_SERVICES}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.NAVIGATION}")
     }
 }
 

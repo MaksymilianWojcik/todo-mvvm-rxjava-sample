@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
     kotlin("android")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -31,6 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
@@ -45,6 +50,13 @@ dependencies {
     implementation(platform(Libs.FIREBASE_BOM))
     implementation(Libs.FIREBASE_ANALYTICS)
     implementation(Libs.FIREBASE_FIRESTORE)
+
+    // architecture components
+    implementation(Libs.LIFECYCLE_VIEWMODEL)
+    implementation(Libs.LIFECYCLE_LIVEDATA)
+    implementation(Libs.NAVIGATION_FRAGMENT)
+    implementation(Libs.NAVIGATION_UI)
+    implementation(Libs.REACTIVE_STREAMS)
 
 
     testImplementation("junit:junit:4.+")

@@ -9,6 +9,9 @@ object Versions {
     const val GOOGLE_SERVICES = "4.3.4"
 
     const val FIREBASE_BOM = "26.1.1"
-
     const val MATERIAL = "1.2.1"
+
+    // Architecture Components
+    const val LIFECYCLE = "2.2.0"
+    const val NAVIGATION = "2.3.2"
 }

@@ -4,4 +4,6 @@
     <string name="menu_settings_title">Settings</string>
     <string name="button_new_task">New Task</string>
     <string name="new_task_label">New Task</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_task_description">Task description</string>
 </resources>

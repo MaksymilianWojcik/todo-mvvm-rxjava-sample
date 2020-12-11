@@ -2,4 +2,6 @@
     <string name="app_name">todo-mvvm-jetpack-reactive-sample</string>
     <string name="menu_tasks_title">Tasks</string>
     <string name="menu_settings_title">Settings</string>
+    <string name="button_new_task">New Task</string>
+    <string name="new_task_label">New Task</string>
 </resources>

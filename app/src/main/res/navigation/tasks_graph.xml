@@ -9,6 +9,18 @@
         android:id="@+id/tasksFragment"
         android:name="com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment.TasksFragment"
         android:label="@string/menu_tasks_title"
-        tools:layout="@layout/fragment_tasks" />
+        tools:layout="@layout/fragment_tasks" >
+
+        <action
+            android:id="@+id/action_tasksFragment_to_newTaskFragment"
+            app:destination="@id/newTaskFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/newTaskFragment"
+        android:name="com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment.NewTaskFragment"
+        android:label="@string/new_task_label"
+        tools:layout="@layout/fragment_new_task"/>
 
 </navigation>

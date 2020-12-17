@@ -4,10 +4,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.CreateNewTaskUseCase
+import com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment.NewTaskFragment
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.SingleLiveEvent
+import com.mw.todo_mvvm_jetpack_reactive_sample.utils.validateSources
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -32,14 +35,19 @@ class NewTaskViewModel @ViewModelInject constructor(
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
+    // validation
+    val isFormValid = validateSources(
+        title.map { it.isNullOrBlank().not() },
+        description.map { it.isNullOrBlank().not() }
+    )
+
     fun createTask() {
         _loadingData.value = true
-        val currentTitle = title.value
-        val currentDescription = description.value
-        if (currentTitle != null && currentDescription != null) {
+        val isFormValid = isFormValid.value ?: false
+        if (isFormValid) {
             val task = Task(
-                title = currentTitle,
-                description = currentDescription
+                title = title.value!!,
+                description = description.value!!
             )
             compositeDisposable.add(
                 createNewTaskUseCase.createNewTask(task)
@@ -47,6 +55,7 @@ class NewTaskViewModel @ViewModelInject constructor(
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         Timber.d("Created new meeting")
+                        // TODO: UIState example, although its not necessary in our example
                         _loadingData.value = false
                         _snackbarMessage.value = R.string.task_added_message
                         _closeScreen.value = Unit

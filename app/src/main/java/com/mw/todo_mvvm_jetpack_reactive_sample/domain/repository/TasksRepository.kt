@@ -9,4 +9,6 @@ interface TasksRepository {
     fun getAllTasks(): Single<List<Task>>
     fun observeTasks(): Observable<List<Task>>
     fun createNewTask(task: Task): Completable
+    fun completeTask(task: Task): Completable
+    fun activateTask(task: Task): Completable
 }

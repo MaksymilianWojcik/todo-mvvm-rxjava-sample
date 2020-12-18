@@ -5,15 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.GetTasksUseCase
+import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusUseCase
+import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusUseCase.TaskStatus
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.SingleLiveEvent
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class TasksViewModel @ViewModelInject constructor(
-    private val getTasksUseCase: GetTasksUseCase
+    private val getTasksUseCase: GetTasksUseCase,
+    private val updateTaskStatusUseCase: UpdateTaskStatusUseCase
 ) : ViewModel() {
 
     private val _navigationDestination = SingleLiveEvent<TasksNavigationDestination>()
@@ -30,6 +35,20 @@ class TasksViewModel @ViewModelInject constructor(
 
     fun addNewTask() {
         navigationDestination.value = TasksNavigationDestination.NewTask
+    }
+
+    fun changeTaskStatus(task: Task, isCompleted: Boolean) {
+        val status = if (isCompleted) TaskStatus.Completed else TaskStatus.Active
+        compositeDisposable.add(
+            updateTaskStatusUseCase.updateTaskStatus(task, status)
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("Update task")
+                }, {
+                    Timber.d("Error: $it")
+                })
+        )
     }
 
     private fun observeTasks() {

@@ -10,10 +10,33 @@ import timber.log.Timber
 import javax.inject.Inject
 
 private const val COLLECTION_TASKS = "Tasks"
+private const val FIELD_TASK_IS_COMPLETED = "isCompleted"
 
 class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestore) {
 
     private val tasksRef: CollectionReference = dbRef.collection(COLLECTION_TASKS)
+
+    fun completeTask(task: Task): Completable {
+        return Completable.create { emitter ->
+            val taskDoc = tasksRef.document(task.id!!)
+            taskDoc.update(FIELD_TASK_IS_COMPLETED, true).addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener {
+                emitter.onError(it)
+            }
+        }
+    }
+
+    fun activateTask(task: Task): Completable {
+        return Completable.create { emitter ->
+            val taskDoc = tasksRef.document(task.id!!)
+            taskDoc.update(FIELD_TASK_IS_COMPLETED, false).addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener {
+                emitter.onError(it)
+            }
+        }
+    }
 
     /**
      * Returns task list

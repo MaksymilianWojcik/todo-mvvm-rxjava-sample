@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.widget.CompoundButton" />
         <variable
             name="task"
             type="com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task" />
@@ -26,14 +27,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:checked="@{task.isCompleted}" />
+            android:checked="@{task.isCompleted}"
+            android:onClick="@{(view) -> viewModel.changeTaskStatus(task, ((CompoundButton)view).isChecked())}"/>
 
         <TextView
             android:id="@+id/title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/grid_16"
+            android:layout_marginEnd="@dimen/grid_16"
             android:layout_marginStart="@dimen/grid_16"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@{task.title}"

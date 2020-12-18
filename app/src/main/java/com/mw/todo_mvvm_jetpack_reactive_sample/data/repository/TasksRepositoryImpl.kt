@@ -17,4 +17,8 @@ class TasksRepositoryImpl  @Inject constructor(
     override fun observeTasks(): Observable<List<Task>> = firebaseDataSource.observeTasks()
 
     override fun createNewTask(task: Task): Completable = firebaseDataSource.createTaskWithOfflineSyncingAndSetId(task)
+
+    override fun completeTask(task: Task): Completable = firebaseDataSource.completeTask(task)
+
+    override fun activateTask(task: Task): Completable = firebaseDataSource.activateTask(task)
 }

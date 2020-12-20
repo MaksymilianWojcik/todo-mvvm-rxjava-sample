@@ -1,6 +1,7 @@
 package com.mw.todo_mvvm_jetpack_reactive_sample.data.source
 
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import io.reactivex.Completable
@@ -28,14 +29,12 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
     }
 
     fun activateTask(task: Task): Completable {
-        return Completable.create { emitter ->
-            val taskDoc = tasksRef.document(task.id!!)
-            taskDoc.update(FIELD_TASK_IS_COMPLETED, false).addOnSuccessListener {
-                emitter.onComplete()
-            }.addOnFailureListener {
-                emitter.onError(it)
-            }
-        }
+        return task.id?.let { taskId ->
+            val taskDoc = tasksRef.document(taskId)
+            task.isCompleted = false
+            // This is an example of updating whole object, not only one field as in [completeTask]
+            return setDocumentCompletable(taskDoc, task)
+        } ?: Completable.error(Exception("Task id not provided!"))
     }
 
     /**
@@ -136,13 +135,18 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
     fun createTaskWithOfflineSyncingAndSetId(task: Task): Completable {
         val taskDoc = tasksRef.document()
         task.id = taskDoc.id
-        return Completable.create { emitter ->
-            taskDoc.set(task).addOnSuccessListener {
-                emitter.onComplete()
-            }.addOnFailureListener { e ->
-                emitter.onError(e)
-            }
-        }
+        return setDocumentCompletable(taskDoc, task)
     }
 
+    // This function sets provided document with provided data. This reduces boilerplate
+    private fun setDocumentCompletable(documentReference: DocumentReference, data: Any): Completable {
+        return Completable.create { emitter ->
+            documentReference.set(data)
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }.addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+    }
 }

@@ -11,4 +11,6 @@ interface TasksRepository {
     fun createNewTask(task: Task): Completable
     fun completeTask(task: Task): Completable
     fun activateTask(task: Task): Completable
+    fun clearCompletedTasks(): Completable
+    fun removeTasks(tasks: List<Task>): Completable
 }

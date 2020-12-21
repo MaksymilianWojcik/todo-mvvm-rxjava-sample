@@ -17,6 +17,51 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
 
     private val tasksRef: CollectionReference = dbRef.collection(COLLECTION_TASKS)
 
+    fun clearCompletedTasks(): Completable {
+        // one way, performing query on firestore - extra calls for querying
+        return Completable.create { emitter ->
+            tasksRef.whereEqualTo(FIELD_TASK_IS_COMPLETED, true).get().addOnSuccessListener { querySnapshot ->
+                val batch = dbRef.batch()
+                querySnapshot.forEach { doc ->
+                    batch.delete(doc.reference)
+                }
+                batch.commit()
+                    .addOnSuccessListener {
+                        emitter.onComplete()
+                    }.addOnFailureListener {
+                        emitter.onError(it)
+                    }
+            }.addOnFailureListener {
+                emitter.onError(it)
+            }
+        }
+    }
+
+    private fun getCompletedTasks(): Single<List<Task>> {
+        return Single.create { emitter ->
+            val tasksCompleted = tasksRef.whereEqualTo(FIELD_TASK_IS_COMPLETED, true).get()
+                .addOnSuccessListener { result ->
+                    val tasksList = result.toObjects(Task::class.java)
+                    emitter.onSuccess(tasksList)
+                }.addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+    }
+
+    fun removeTasks(tasks: List<Task>): Completable {
+        // another way, using batch writes and provided list of documents to be removed
+        return Completable.create { emitter ->
+            dbRef.runBatch {
+                tasks.map { tasksRef.document(it.id!!).delete() }
+            }.addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener {
+                emitter.onError(it)
+            }
+        }
+    }
+
     fun completeTask(task: Task): Completable {
         return Completable.create { emitter ->
             val taskDoc = tasksRef.document(task.id!!)

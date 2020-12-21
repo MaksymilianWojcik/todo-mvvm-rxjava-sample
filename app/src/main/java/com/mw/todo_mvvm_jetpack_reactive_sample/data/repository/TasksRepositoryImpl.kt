@@ -21,4 +21,8 @@ class TasksRepositoryImpl  @Inject constructor(
     override fun completeTask(task: Task): Completable = firebaseDataSource.completeTask(task)
 
     override fun activateTask(task: Task): Completable = firebaseDataSource.activateTask(task)
+
+    override fun clearCompletedTasks(): Completable = firebaseDataSource.clearCompletedTasks()
+
+    override fun removeTasks(tasks: List<Task>): Completable = firebaseDataSource.removeTasks(tasks)
 }

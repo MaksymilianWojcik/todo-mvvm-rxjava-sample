@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
+import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.ClearCompletedTasksUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.GetTasksUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusUseCase.TaskStatus
@@ -18,7 +19,8 @@ import timber.log.Timber
 
 class TasksViewModel @ViewModelInject constructor(
     private val getTasksUseCase: GetTasksUseCase,
-    private val updateTaskStatusUseCase: UpdateTaskStatusUseCase
+    private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
+    private val clearCompletedTasksUseCase: ClearCompletedTasksUseCase
 ) : ViewModel() {
 
     private val _navigationDestination = SingleLiveEvent<TasksNavigationDestination>()
@@ -47,6 +49,20 @@ class TasksViewModel @ViewModelInject constructor(
                     Timber.d("Update task")
                 }, {
                     Timber.d("Error: $it")
+                })
+        )
+    }
+
+    fun clearCompletedTasks() {
+        val completedTasks = _tasksList.value?.filter { it.isCompleted }.orEmpty()
+        compositeDisposable.add(
+            clearCompletedTasksUseCase.clearTasks(completedTasks)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("Cleared completed tasks")
+                }, {
+                    Timber.e("Error clearing completed tasks: $it")
                 })
         )
     }

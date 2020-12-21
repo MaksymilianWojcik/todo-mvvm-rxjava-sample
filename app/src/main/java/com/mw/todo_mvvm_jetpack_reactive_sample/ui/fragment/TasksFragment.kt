@@ -1,13 +1,12 @@
 package com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.FragmentTasksBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.adapters.TasksAdapter
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
@@ -32,6 +31,7 @@ class TasksFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = tasksViewModel
         }
+        setHasOptionsMenu(true)
         return dataBinding.root
     }
 
@@ -39,6 +39,20 @@ class TasksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupUI()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tasks_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_clear -> {
+                tasksViewModel.clearCompletedTasks()
+                true
+            }
+            else -> false
+        }
     }
 
     private fun setupRecyclerView() {

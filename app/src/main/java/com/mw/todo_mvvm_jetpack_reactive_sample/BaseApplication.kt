@@ -13,8 +13,6 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        // TODO: Remove this when consent handled
-        analyticsTracker.setTrackingAndCrashlyticsEnabled(true)
         AppLogger(analyticsTracker)
     }
 }

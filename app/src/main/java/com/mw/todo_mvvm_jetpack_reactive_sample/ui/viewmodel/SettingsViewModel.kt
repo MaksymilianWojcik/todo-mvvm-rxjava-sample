@@ -13,6 +13,10 @@ class SettingsViewModel @ViewModelInject constructor(
     // two-way databinding
     val analyticsEnabled = MutableLiveData<Boolean>(false)
 
+    init {
+        analyticsEnabled.value = enableAnalyticsUseCase.isEnabled()
+    }
+
     fun enableAnalytics(enable: Boolean) {
         enableAnalyticsUseCase.enableAnalytics(enable)
     }

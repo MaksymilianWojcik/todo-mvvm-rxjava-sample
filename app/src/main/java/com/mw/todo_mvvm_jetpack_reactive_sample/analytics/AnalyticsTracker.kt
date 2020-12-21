@@ -4,31 +4,35 @@ import android.app.Activity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.mw.todo_mvvm_jetpack_reactive_sample.data.store.AppDataStore
 import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val CRASHLYTICS_KEY_PRIORITY = "CRASH_PRIORITY"
 private const val CRASHLYTICS_KEY_TAG = "CRASH_TAG"
 
+private const val KEY_ANALYTICS_PREFERENCES = "analyticsKey"
+
 @Singleton
 class AnalyticsTracker @Inject constructor(
     private val firebaseAnalytics: FirebaseAnalytics,
-    private val firebaseCrashlytics: FirebaseCrashlytics
+    private val firebaseCrashlytics: FirebaseCrashlytics,
+    private val appDataStore: AppDataStore // we could do separate store for settings here
 ) {
 
-    // TODO: Handle consent - shared prefs
-    var isEnabled: Boolean = true
+    fun isEnabled(): Boolean = appDataStore.getBoolean(KEY_ANALYTICS_PREFERENCES, false)
 
     fun setTrackingAndCrashlyticsEnabled(isEnabled: Boolean) {
-        // TODO: update shared prefs
+        appDataStore.putBoolean(KEY_ANALYTICS_PREFERENCES, isEnabled)
         firebaseAnalytics.setAnalyticsCollectionEnabled(isEnabled)
         firebaseCrashlytics.setCrashlyticsCollectionEnabled(isEnabled)
     }
 
+    // TODO: Show dialog asking for user consent in the future
     fun shouldAskForUserConsent(): Boolean = false
 
     fun trackScreen(activity: Activity, screenName: String) {
-        if (isEnabled.not()) return
+        if (isEnabled().not()) return
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
             param(FirebaseAnalytics.Param.SCREEN_CLASS, activity::class.java.simpleName)
@@ -36,7 +40,7 @@ class AnalyticsTracker @Inject constructor(
     }
 
     fun trackEvent(trackEvent: TrackEvent) {
-        if (isEnabled.not()) return
+        if (isEnabled().not()) return
         // val (eventName, eventParams) = trackEvent
         firebaseAnalytics.logEvent(trackEvent.eventName) {
             param(trackEvent.eventName, trackEvent.eventName)
@@ -50,7 +54,7 @@ class AnalyticsTracker @Inject constructor(
         message: String,
         throwable: Throwable?
     ) {
-        if (isEnabled.not()) return
+        if (isEnabled().not()) return
         firebaseCrashlytics.apply {
             setCustomKey(CRASHLYTICS_KEY_PRIORITY, priority)
             setCustomKey(CRASHLYTICS_KEY_TAG, tag ?: "")

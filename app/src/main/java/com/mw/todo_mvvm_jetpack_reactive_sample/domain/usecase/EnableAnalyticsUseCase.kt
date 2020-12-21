@@ -10,4 +10,5 @@ class EnableAnalyticsUseCase @Inject constructor(
         analyticsTracker.setTrackingAndCrashlyticsEnabled(enable)
     }
 
+    fun isEnabled() = analyticsTracker.isEnabled()
 }

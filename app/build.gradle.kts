@@ -5,6 +5,8 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.firebase.crashlytics")
+
 }
 
 android {
@@ -51,6 +53,7 @@ dependencies {
     // firebase
     implementation(platform(Libs.FIREBASE_BOM))
     implementation(Libs.FIREBASE_ANALYTICS)
+    implementation(Libs.FIREBASE_CRASHLYTICS)
     implementation(Libs.FIREBASE_FIRESTORE)
 
     // architecture components

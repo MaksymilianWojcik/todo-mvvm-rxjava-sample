@@ -47,8 +47,12 @@ class TasksFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_clear -> {
+            R.id.menu_clear_completed -> {
                 tasksViewModel.clearCompletedTasks()
+                true
+            }
+            R.id.menu_clear_active -> {
+                tasksViewModel.clearActiveTasks()
                 true
             }
             else -> false

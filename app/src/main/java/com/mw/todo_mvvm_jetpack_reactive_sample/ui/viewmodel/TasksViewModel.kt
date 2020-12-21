@@ -67,6 +67,20 @@ class TasksViewModel @ViewModelInject constructor(
         )
     }
 
+    fun clearActiveTasks() {
+        val activeTasks = _tasksList.value?.filter { it.isCompleted.not() }.orEmpty()
+        compositeDisposable.add(
+            clearCompletedTasksUseCase.clearTasks(activeTasks)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("Cleared completed tasks")
+                }, {
+                    Timber.e("Error clearing completed tasks: $it")
+                })
+        )
+    }
+
     private fun observeTasks() {
         compositeDisposable.add(
             getTasksUseCase.observeTasks()

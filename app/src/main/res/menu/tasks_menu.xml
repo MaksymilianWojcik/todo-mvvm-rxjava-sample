@@ -2,7 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_clear"
+        android:id="@+id/menu_clear_completed"
         android:title="@string/menu_clear_completed"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_clear_active"
+        android:title="@string/menu_clear_active"
         app:showAsAction="never" />
 </menu>

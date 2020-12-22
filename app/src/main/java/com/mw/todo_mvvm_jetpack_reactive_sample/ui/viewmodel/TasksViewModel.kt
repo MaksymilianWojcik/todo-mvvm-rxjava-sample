@@ -2,10 +2,7 @@ package com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.ClearCompletedTasksUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.GetTasksUseCase
@@ -28,17 +25,22 @@ class TasksViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private val compositeDisposable = CompositeDisposable()
+
     private val _navigationDestination = SingleLiveEvent<TasksNavigationDestination>()
     val navigationDestination = _navigationDestination
 
-    // holds all tasks
-    private val _tasksList = MutableLiveData<List<Task>>()
+    private val _filterType = MutableLiveData<TaskFilterType>(TaskFilterType.ALL_TASKS)
+    // all tasks that are retrieved from firestore
+    private val _allTasks = MutableLiveData<List<Task>>()
+    // tasks that are showed in recyclerview
+    private val _tasks = _allTasks.switchMap { tasks ->
+        _filterType.switchMap { filter ->
+            filterTasks(tasks, filter)
+        }
+    }
+    val tasks: LiveData<List<Task>> = _tasks
 
-    // holds filtered tasks, used to display content in adapter
-    private val _filteredTasksList = MutableLiveData<List<Task>>(_tasksList.value)
-    val filteredTasksList: LiveData<List<Task>> = _filteredTasksList
-
-    private val compositeDisposable = CompositeDisposable()
 
     init {
         observeTasks()
@@ -47,17 +49,7 @@ class TasksViewModel @ViewModelInject constructor(
 
     fun setFilters(taskFilterType: TaskFilterType) {
         savedStateHandle.set(KEY_TASKS_FILTER_SAVED_STATE, taskFilterType)
-        when (taskFilterType) {
-            TaskFilterType.ALL_TASKS -> {
-                _filteredTasksList.value = filterTasks(_tasksList.value ?: emptyList(), TaskFilterType.ALL_TASKS)
-            }
-            TaskFilterType.ACTIVE_TASKS -> {
-                _filteredTasksList.value = filterTasks(_tasksList.value ?: emptyList(), TaskFilterType.ACTIVE_TASKS)
-            }
-            TaskFilterType.COMPLETED_TASKS -> {
-                _filteredTasksList.value = filterTasks(_tasksList.value ?: emptyList(), TaskFilterType.COMPLETED_TASKS)
-            }
-        }
+        _filterType.value = taskFilterType
     }
 
     fun addNewTask() {
@@ -79,7 +71,7 @@ class TasksViewModel @ViewModelInject constructor(
     }
 
     fun clearCompletedTasks() {
-        val completedTasks = _tasksList.value?.filter { it.isCompleted }.orEmpty()
+        val completedTasks = _allTasks.value?.filter { it.isCompleted }.orEmpty()
         compositeDisposable.add(
             clearCompletedTasksUseCase.clearTasks(completedTasks)
                 .subscribeOn(Schedulers.io())
@@ -93,7 +85,7 @@ class TasksViewModel @ViewModelInject constructor(
     }
 
     fun clearActiveTasks() {
-        val activeTasks = _tasksList.value?.filter { it.isCompleted.not() }.orEmpty()
+        val activeTasks = _allTasks.value?.filter { it.isCompleted.not() }.orEmpty()
         compositeDisposable.add(
             clearCompletedTasksUseCase.clearTasks(activeTasks)
                 .subscribeOn(Schedulers.io())
@@ -113,8 +105,8 @@ class TasksViewModel @ViewModelInject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Timber.d("Observing tasks: $it")
-                    _tasksList.value = it
-                    _filteredTasksList.value = filterTasks(it, getSavedFilterType())
+                    _allTasks.value = it
+
                 }, {
                     Timber.e("Error observing tasks: $it")
                 })
@@ -125,16 +117,14 @@ class TasksViewModel @ViewModelInject constructor(
         return savedStateHandle.get(KEY_TASKS_FILTER_SAVED_STATE) ?: TaskFilterType.ALL_TASKS
     }
 
-    private fun filterTasks(tasksList: List<Task>, filterType: TaskFilterType): List<Task> {
-        val tasksToShow = ArrayList<Task>()
-        for (task in tasksList) {
-            when (filterType) {
-                TaskFilterType.ALL_TASKS -> tasksToShow.add(task)
-                TaskFilterType.ACTIVE_TASKS -> if (task.isCompleted.not()) tasksToShow.add(task)
-                TaskFilterType.COMPLETED_TASKS -> if (task.isCompleted) tasksToShow.add(task)
-            }
+    private fun filterTasks(taskList: List<Task>, filterType: TaskFilterType): LiveData<List<Task>> {
+        val result = MutableLiveData<List<Task>>()
+        when (filterType) {
+            TaskFilterType.ALL_TASKS -> result.value = taskList
+            TaskFilterType.ACTIVE_TASKS -> result.value = taskList.filter { it.isCompleted.not() }
+            TaskFilterType.COMPLETED_TASKS -> result.value = taskList.filter { it.isCompleted }
         }
-        return tasksToShow
+        return result
     }
 
     override fun onCleared() {

@@ -94,7 +94,7 @@ class TasksFragment : Fragment() {
                 else -> Timber.w("Navigation destination not handled")
             }
         }
-        tasksViewModel.filteredTasksList.observe(viewLifecycleOwner) {
+        tasksViewModel.tasks.observe(viewLifecycleOwner) {
             // TODO: bindingadapter for this
             tasksAdapter.submitList(it)
         }

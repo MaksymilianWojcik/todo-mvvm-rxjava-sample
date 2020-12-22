@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.ActivityMainBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.setupWithNavController
+import com.mw.todo_mvvm_jetpack_reactive_sample.utils.whenNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -24,6 +25,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (savedInstanceState == null) {
+            setupBottomNavigation()
+        } // else wait for onRestoreInstanceState
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
         setupBottomNavigation()
     }
 
@@ -40,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return currentNavController?.value?.navigateUp() ?: super.onSupportNavigateUp()
+        return currentNavController?.value?.navigateUp() ?: false
     }
 
     private fun setupBottomNavigation() {

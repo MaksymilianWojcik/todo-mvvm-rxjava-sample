@@ -13,4 +13,8 @@
     <string name="menu_clear_active">Clear active</string>
     <string name="sign_out_label">Sign Out</string>
     <string name="sign_in_label">Sign In</string>
+    <string name="nav_active">menu_all_title</string>
+    <string name="menu_active_title">Active</string>
+    <string name="menu_completed_title">Completed</string>
+    <string name="menu_all_title">All</string>
 </resources>

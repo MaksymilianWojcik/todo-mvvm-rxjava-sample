@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/allTasksFilter"
+        android:title="@string/menu_all_title" />
+    <item
+        android:id="@+id/activeTasksFilter"
+        android:title="@string/menu_active_title" />
+    <item
+        android:id="@+id/completedTasksFilter"
+        android:title="@string/menu_completed_title" />
+</menu>

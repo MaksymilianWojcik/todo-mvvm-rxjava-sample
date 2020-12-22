@@ -2,6 +2,7 @@ package com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment
 
 import android.os.Bundle
 import android.view.*
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.FragmentTasksBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.adapters.TasksAdapter
+import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskFilterType
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +57,27 @@ class TasksFragment : Fragment() {
                 tasksViewModel.clearActiveTasks()
                 true
             }
+            R.id.menu_filter -> {
+                showFilters()
+                true
+            }
             else -> false
+        }
+    }
+
+    private fun showFilters() {
+        val view = activity?.findViewById<View>(R.id.menu_filter) ?: return
+        PopupMenu(requireContext(), view).run {
+            menuInflater.inflate(R.menu.tasks_filter_menu, menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.allTasksFilter -> tasksViewModel.setFilters(TaskFilterType.ALL_TASKS)
+                    R.id.activeTasksFilter -> tasksViewModel.setFilters(TaskFilterType.ACTIVE_TASKS)
+                    R.id.completedTasksFilter -> tasksViewModel.setFilters(TaskFilterType.COMPLETED_TASKS)
+                }
+                true
+            }
+            show()
         }
     }
 
@@ -72,7 +94,8 @@ class TasksFragment : Fragment() {
                 else -> Timber.w("Navigation destination not handled")
             }
         }
-        tasksViewModel.tasksList.observe(viewLifecycleOwner) {
+        tasksViewModel.filteredTasksList.observe(viewLifecycleOwner) {
+            // TODO: bindingadapter for this
             tasksAdapter.submitList(it)
         }
     }

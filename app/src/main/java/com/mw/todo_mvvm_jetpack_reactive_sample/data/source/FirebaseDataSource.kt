@@ -74,12 +74,13 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
     }
 
     fun activateTask(task: Task): Completable {
-        return task.id?.let { taskId ->
-            val taskDoc = tasksRef.document(taskId)
-            task.isCompleted = false
-            // This is an example of updating whole object, not only one field as in [completeTask]
-            return setDocumentCompletable(taskDoc, task)
-        } ?: Completable.error(Exception("Task id not provided!"))
+        return Completable.create { emitter ->
+            task.id?.let {
+                val taskDoc = tasksRef.document(it)
+                // another way of updating doc
+                taskDoc.set(task.copy(isCompleted = false))
+            } ?: emitter.onError(Exception("Task id not provided!"))
+        }
     }
 
     /**

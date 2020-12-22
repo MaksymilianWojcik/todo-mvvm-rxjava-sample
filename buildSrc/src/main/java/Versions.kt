@@ -10,6 +10,7 @@ object Versions {
 
     const val FIREBASE_BOM = "26.1.1"
     const val FIREBASE_CRASHLYTICS = "2.4.1"
+    const val FIREBASE_AUTH_UI = "7.1.1"
     const val MATERIAL = "1.2.1"
 
     // Architecture Components

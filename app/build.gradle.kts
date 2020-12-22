@@ -55,6 +55,8 @@ dependencies {
     implementation(Libs.FIREBASE_ANALYTICS)
     implementation(Libs.FIREBASE_CRASHLYTICS)
     implementation(Libs.FIREBASE_FIRESTORE)
+    implementation(Libs.FIREBASE_AUTH)
+    implementation(Libs.FIREBASE_AUTH_UI)
 
     // architecture components
     implementation(Libs.LIFECYCLE_VIEWMODEL)

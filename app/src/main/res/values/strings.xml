@@ -11,4 +11,6 @@
     <string name="task_added_message">Task added</string>
     <string name="menu_clear_completed">Clear completed</string>
     <string name="menu_clear_active">Clear active</string>
+    <string name="sign_out_label">Sign Out</string>
+    <string name="sign_in_label">Sign In</string>
 </resources>

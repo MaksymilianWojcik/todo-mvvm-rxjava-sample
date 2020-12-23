@@ -9,6 +9,7 @@ import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.GetTasksUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusUseCase.TaskStatus
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskFilterType
+import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskSortingType
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,6 +18,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 private const val KEY_TASKS_FILTER_SAVED_STATE = "keyTasksFilter"
+private const val KEY_TASKS_SORT_SAVED_STATE = "keyTasksSorting"
 
 class TasksViewModel @ViewModelInject constructor(
     private val getTasksUseCase: GetTasksUseCase,
@@ -30,18 +32,28 @@ class TasksViewModel @ViewModelInject constructor(
     private val _navigationDestination = SingleLiveEvent<TasksNavigationDestination>()
     val navigationDestination = _navigationDestination
 
+    // all tasks that are retrieved from firestore
+    private val _allTasks = MutableLiveData<List<Task>>()
+
     // retrieve filterType from savedStateHandle, ALL_TASKS is an initial value
     private val _filterType: MutableLiveData<TaskFilterType> =
         savedStateHandle.getLiveData<TaskFilterType>(KEY_TASKS_FILTER_SAVED_STATE, TaskFilterType.ALL_TASKS)
-    // all tasks that are retrieved from firestore
-    private val _allTasks = MutableLiveData<List<Task>>()
+
+    private val _sortType: MutableLiveData<TaskSortingType> =
+        savedStateHandle.getLiveData(KEY_TASKS_SORT_SAVED_STATE, TaskSortingType.ASCENDING)
+
     // tasks that are showed in recyclerview
     private val _tasks = _allTasks.distinctUntilChanged().switchMap { tasks ->
-        _filterType.switchMap { filter ->
-            filterTasks(tasks, filter)
+        _filterType.distinctUntilChanged().switchMap { filter ->
+            filterTasks(tasks, filter).switchMap { filtered -> // this will be invoked on _filterType change and than down stream
+                _sortType.distinctUntilChanged().switchMap { sortType ->
+                    sortTasks(filtered, sortType) // only this will be invoked when _sortType value changes
+                }
+            }
         }
     }
     val tasks: LiveData<List<Task>> = _tasks
+
 
     init {
         observeTasks()
@@ -54,6 +66,10 @@ class TasksViewModel @ViewModelInject constructor(
     fun setFilters(taskFilterType: TaskFilterType) {
         // we don't need to set _filterType.value here, as savedStateHandle will update it via LiveData
         savedStateHandle.set(KEY_TASKS_FILTER_SAVED_STATE, taskFilterType)
+    }
+
+    fun setSorting(taskSortingType: TaskSortingType) {
+        savedStateHandle[KEY_TASKS_SORT_SAVED_STATE] = taskSortingType
     }
 
     fun changeTaskStatus(task: Task, isCompleted: Boolean) {
@@ -114,6 +130,22 @@ class TasksViewModel @ViewModelInject constructor(
         }
         return result
     }
+
+    private fun sortTasks(tasksList: List<Task>, sortType: TaskSortingType): LiveData<List<Task>> {
+        return MutableLiveData<List<Task>>(when (sortType) {
+            TaskSortingType.ASCENDING -> tasksList.sortedBy { it.title }
+            TaskSortingType.DESCENDING -> tasksList.sortedByDescending { it.title }
+        })
+    }
+
+//    private fun sortTasks(tasksList: List<Task>, sortType: TaskSortingType): LiveData<List<Task>> {
+//        val result = MutableLiveData<List<Task>>()
+//        when (sortType) {
+//            TaskSortingType.ASCENDING -> result.value = tasksList.sortedBy { it.title }
+//            TaskSortingType.DESCENDING -> result.value = tasksList.sortedByDescending { it.title }
+//        }
+//        return result
+//    }
 
     override fun onCleared() {
         super.onCleared()

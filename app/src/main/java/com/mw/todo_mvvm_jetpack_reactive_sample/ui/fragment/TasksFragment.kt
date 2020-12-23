@@ -11,6 +11,7 @@ import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.FragmentTasksBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.adapters.TasksAdapter
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskFilterType
+import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskSortingType
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,14 +60,18 @@ class TasksFragment : Fragment() {
                 true
             }
             R.id.menu_filter -> {
-                showFilters()
+                showFiltersMenu()
+                true
+            }
+            R.id.menu_sort -> {
+                showSortingMenu()
                 true
             }
             else -> false
         }
     }
 
-    private fun showFilters() {
+    private fun showFiltersMenu() {
         val view = activity?.findViewById<View>(R.id.menu_filter) ?: return
         PopupMenu(requireContext(), view).run {
             menuInflater.inflate(R.menu.tasks_filter_menu, menu)
@@ -75,6 +80,21 @@ class TasksFragment : Fragment() {
                     R.id.allTasksFilter -> tasksViewModel.setFilters(TaskFilterType.ALL_TASKS)
                     R.id.activeTasksFilter -> tasksViewModel.setFilters(TaskFilterType.ACTIVE_TASKS)
                     R.id.completedTasksFilter -> tasksViewModel.setFilters(TaskFilterType.COMPLETED_TASKS)
+                }
+                true
+            }
+            show()
+        }
+    }
+
+    private fun showSortingMenu() {
+        val view = activity?.findViewById<View>(R.id.menu_sort) ?: return
+        PopupMenu(requireContext(), view).run {
+            menuInflater.inflate(R.menu.tasks_sort_menu, menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.ascSorting -> tasksViewModel.setSorting(TaskSortingType.ASCENDING)
+                    R.id.descSorting -> tasksViewModel.setSorting(TaskSortingType.DESCENDING)
                 }
                 true
             }

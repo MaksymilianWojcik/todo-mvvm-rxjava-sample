@@ -17,4 +17,6 @@
     <string name="menu_active_title">Active</string>
     <string name="menu_completed_title">Completed</string>
     <string name="menu_all_title">All</string>
+    <string name="menu_sort_asc_title">Ascending</string>
+    <string name="menu_sort_desc_title">Descending</string>
 </resources>

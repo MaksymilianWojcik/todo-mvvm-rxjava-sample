@@ -1,22 +1,29 @@
 <resources>
-    <string name="app_name">todo-mvvm-jetpack-reactive-sample</string>
+    <string name="app_name" translatable="false">todo-mvvm-jetpack-reactive-sample</string>
+    <!-- Tasks List -->
+    <string name="button_new_task">New Task</string>
     <string name="menu_tasks_title">Tasks</string>
     <string name="menu_settings_title">Settings</string>
-    <string name="button_new_task">New Task</string>
+    <string name="menu_clear_completed">Clear completed</string>
+    <string name="menu_clear_active">Clear active</string>
+    <string name="menu_active_title">Active</string>
+    <string name="menu_completed_title">Completed</string>
+    <string name="menu_all_title">All</string>
+    <string name="menu_sort_asc_title">Ascending</string>
+    <string name="menu_sort_desc_title">Descending</string>
+    <string name="task_completed_cleared">Completed tasks removed</string>
+    <string name="task_active_cleared">Active tasks removed</string>
+    <string name="error_failed_to_remove_tasks">Failed to remove tasks. Please try again later</string>
+    <string name="error_failted_to_fectch_tasks">Failed to fetch tasks. Please try again later</string>
+    <string name="error_failed_to_change_task_status">Failed to change task status. Please try again later</string>
+    <!-- New Task -->
     <string name="new_task_label">New Task</string>
     <string name="hint_title">Title</string>
     <string name="hint_task_description">Task description</string>
     <string name="error_empty_task">Task cannot be empty</string>
     <string name="error_failed_to_save_task">Failed to save task. Please try again</string>
     <string name="task_added_message">Task added</string>
-    <string name="menu_clear_completed">Clear completed</string>
-    <string name="menu_clear_active">Clear active</string>
+    <!-- Settings -->
     <string name="sign_out_label">Sign Out</string>
     <string name="sign_in_label">Sign In</string>
-    <string name="nav_active">menu_all_title</string>
-    <string name="menu_active_title">Active</string>
-    <string name="menu_completed_title">Completed</string>
-    <string name="menu_all_title">All</string>
-    <string name="menu_sort_asc_title">Ascending</string>
-    <string name="menu_sort_desc_title">Descending</string>
 </resources>

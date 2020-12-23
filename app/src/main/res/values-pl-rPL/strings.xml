@@ -1,0 +1,28 @@
+<resources>
+    <!-- Tasks List -->
+    <string name="button_new_task">Dodaj zadanie</string>
+    <string name="menu_tasks_title">Do zrobienia</string>
+    <string name="menu_settings_title">Ustawienia</string>
+    <string name="menu_clear_completed">Usuń wykonane</string>
+    <string name="menu_clear_active">Usuń aktywne</string>
+    <string name="menu_active_title">Aktywne</string>
+    <string name="menu_completed_title">Wykonane</string>
+    <string name="menu_all_title">Wszystkie</string>
+    <string name="menu_sort_asc_title">Rosnąco</string>
+    <string name="menu_sort_desc_title">Malejąco</string>
+    <string name="task_completed_cleared">Wykonane zadnia usunięte</string>
+    <string name="task_active_cleared">Aktywne zadnia usunięte</string>
+    <string name="error_failed_to_remove_tasks">Nie udało się usunąć zadań. Spróboj ponownie później</string>
+    <string name="error_failted_to_fectch_tasks">Nie udało się pobrać zadań. Spróboj ponownie później</string>
+    <string name="error_failed_to_change_task_status">Nie udało się zmienić statusu. Spróboj ponownie później</string>
+    <!-- New Task -->
+    <string name="new_task_label">Nowe zadanie</string>
+    <string name="hint_title">Tytuł</string>
+    <string name="hint_task_description">Opis zadania</string>
+    <string name="error_empty_task">Wypełnij pola</string>
+    <string name="error_failed_to_save_task">Nie udało się zapisać zadania. Spróboj ponownie później</string>
+    <string name="task_added_message">Zadanie dodane</string>
+    <!-- Settings -->
+    <string name="sign_out_label">Wyloguj się</string>
+    <string name="sign_in_label">Zaloguj się</string>
+</resources>

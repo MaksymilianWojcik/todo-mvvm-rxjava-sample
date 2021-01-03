@@ -11,10 +11,9 @@ and uses:
 - RxJava2, RxAndroid
 - Material Design
 - Dagger Hilt
-- Glide
 - Timber
-- Jetpack: LiveData, ViewModel, Navigation, Pagination, Room
-- Unit tests
+- Jetpack: LiveData, ViewModel, Navigation, Pagination (todo)
+- Unit tests (todo)
 - buildSrc for dependencies and KTS
 
 #### Future plans
@@ -23,7 +22,7 @@ and uses:
 - Add UI test (to consider)
 - Configure Github Actions
 - Configure lint & detekt
-
+- Glide
 
 ## Notes
 

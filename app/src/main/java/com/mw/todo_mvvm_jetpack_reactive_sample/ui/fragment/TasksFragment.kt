@@ -34,6 +34,7 @@ class TasksFragment : Fragment() {
         dataBinding = FragmentTasksBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = tasksViewModel
+            tasksAdapter = TasksAdapter(tasksViewModel)
         }
         setHasOptionsMenu(true)
         return dataBinding.root
@@ -41,7 +42,6 @@ class TasksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setupRecyclerView()
         setupUI()
     }
 
@@ -102,12 +102,6 @@ class TasksFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
-        // TODO: bindingadapter for this
-        tasksAdapter = TasksAdapter(tasksViewModel)
-        dataBinding.tasksList.adapter = tasksAdapter
-    }
-
     private fun setupUI() {
         tasksViewModel.navigationDestination.observe(viewLifecycleOwner) {
             when (it) {
@@ -115,11 +109,6 @@ class TasksFragment : Fragment() {
                 else -> Timber.w("Navigation destination not handled")
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setupRecyclerView()
     }
 
     private fun navigateToNewTask() {

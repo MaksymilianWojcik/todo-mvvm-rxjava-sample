@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.TasksViewModel" />
+        <variable
+            name="tasksAdapter"
+            type="com.mw.todo_mvvm_jetpack_reactive_sample.ui.adapters.TasksAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +23,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:items="@{viewModel.tasks}"/>
+            app:setAdapter="@{tasksAdapter}"
+            app:items="@{viewModel.tasks}" />
+            <!-- Note here, that setAdapter needs to be above app:items -->
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/createMeetingBtn"

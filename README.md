@@ -141,3 +141,36 @@ We can ofc pass args to the overloaded operator:
         }
     }
 ```
+
+#### BindingAdapters usage order matters
+Lets assume we have defined two adapters for recyclerview:
+
+```kotlin
+    @BindingAdapter("app:adapter")
+    fun RecyclerView.adapter(adapter: RecyclerView.Adapter<*>) {
+        this.adapter = adapter
+    }
+    
+    @BindingAdapter("app:taskItems")
+    fun setItems(recyclerView: RecyclerView, items: List<Task>) {
+        (recyclerView.adapter as TasksAdapter).submitList(items)
+    }
+```
+
+Now if we would do it in our layout like this, we would get an error cause of casting null type:
+
+```xml
+    <androidx.recyclerview.widget.RecyclerView
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:items="@{viewModel.tasks}"
+        app:setAdapter="@{tasksAdapter}" />
+```
+
+This is because when we define `app:items`, we actually dont have adapter ready yet. Thats why `setAdapter` has to be first:
+
+```xml
+    <androidx.recyclerview.widget.RecyclerView
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:items="@{viewModel.tasks}"
+        app:setAdapter="@{tasksAdapter}" />
+```

@@ -41,7 +41,7 @@ class TasksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+//        setupRecyclerView()
         setupUI()
     }
 
@@ -115,10 +115,11 @@ class TasksFragment : Fragment() {
                 else -> Timber.w("Navigation destination not handled")
             }
         }
-        tasksViewModel.tasks.observe(viewLifecycleOwner) {
-            // TODO: bindingadapter for this
-            tasksAdapter.submitList(it)
-        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setupRecyclerView()
     }
 
     private fun navigateToNewTask() {

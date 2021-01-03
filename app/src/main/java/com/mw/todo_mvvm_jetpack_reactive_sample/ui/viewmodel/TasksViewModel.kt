@@ -33,7 +33,7 @@ class TasksViewModel @ViewModelInject constructor(
     val navigationDestination = _navigationDestination
 
     // all tasks that are retrieved from firestore
-    private val _allTasks = MutableLiveData<List<Task>>()
+    private val _allTasks = MutableLiveData<List<Task>>(emptyList()) // or .apply { value = emptyList() }
 
     // retrieve filterType from savedStateHandle, ALL_TASKS is an initial value
     private val _filterType: MutableLiveData<TaskFilterType> =

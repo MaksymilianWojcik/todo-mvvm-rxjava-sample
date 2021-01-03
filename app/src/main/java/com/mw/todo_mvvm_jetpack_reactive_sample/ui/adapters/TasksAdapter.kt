@@ -18,6 +18,7 @@ class TasksAdapter(
     override fun bind(binding: TaskItemBinding, item: Task) {
         binding.viewModel = viewModel
         binding.task = item
+        binding.executePendingBindings()
     }
 }
 

@@ -16,3 +16,11 @@ fun setStyle(textView: TextView, enabled: Boolean) {
         textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
     }
 }
+
+// TODO: Consider moving this to TasksAdapter
+@BindingAdapter("app:items")
+fun setItems(recyclerView: RecyclerView, items: List<Task>) {
+    // This is not necessary anymore, as we provide the default emptyList in TasksViewModel for _allTasks
+//    items?.let { (recyclerView.adapter as TasksAdapter).submitList(items) }
+    (recyclerView.adapter as TasksAdapter).submitList(items)
+}

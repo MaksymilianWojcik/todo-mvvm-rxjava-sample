@@ -123,9 +123,21 @@ Which than we can use like this:
 
 ```kotlin
     //  assume we have an instance like getTasksUseCase: GetTasksUseCase
-    getTasksUseCase()
-        .subscribeOn()
-        ...
+    getTaskUseCase() // instead of getTaskUseCase().getTasks()
 ```
-
 There are plenty of more operators available to overload, check the docs [here](https://kotlinlang.org/docs/reference/operator-overloading.html)
+
+We can ofc pass args to the overloaded operator:
+
+```kotlin
+    class SomeUseCase @Inject constructor(
+        private val repository: Repository
+    ) {    
+        operator fun invoke(
+            arg1: Boolean = false,
+            arg2: SomeArg
+        ): Observable<List<Task>> = repository.observeTasks() {
+            return repository.observerModel(arg1, arg2)
+        }
+    }
+```

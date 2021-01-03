@@ -54,6 +54,8 @@ class TasksViewModel @ViewModelInject constructor(
     }
     val tasks: LiveData<List<Task>> = _tasks
 
+    // example of transformation, to show empty items background
+    val empty: LiveData<Boolean> = Transformations.map(_tasks) { it.isEmpty() }
 
     init {
         observeTasks()
@@ -137,15 +139,6 @@ class TasksViewModel @ViewModelInject constructor(
             TaskSortingType.DESCENDING -> tasksList.sortedByDescending { it.title }
         })
     }
-
-//    private fun sortTasks(tasksList: List<Task>, sortType: TaskSortingType): LiveData<List<Task>> {
-//        val result = MutableLiveData<List<Task>>()
-//        when (sortType) {
-//            TaskSortingType.ASCENDING -> result.value = tasksList.sortedBy { it.title }
-//            TaskSortingType.DESCENDING -> result.value = tasksList.sortedByDescending { it.title }
-//        }
-//        return result
-//    }
 
     override fun onCleared() {
         super.onCleared()

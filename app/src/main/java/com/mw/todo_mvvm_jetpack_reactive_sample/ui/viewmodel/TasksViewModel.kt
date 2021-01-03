@@ -42,6 +42,7 @@ class TasksViewModel @ViewModelInject constructor(
     private val _sortType: MutableLiveData<TaskSortingType> =
         savedStateHandle.getLiveData(KEY_TASKS_SORT_SAVED_STATE, TaskSortingType.ASCENDING)
 
+    // TODO: Refactor this later with MediatorLiveData
     // tasks that are showed in recyclerview
     private val _tasks = _allTasks.distinctUntilChanged().switchMap { tasks ->
         _filterType.distinctUntilChanged().switchMap { filter ->
@@ -54,6 +55,7 @@ class TasksViewModel @ViewModelInject constructor(
     }
     val tasks: LiveData<List<Task>> = _tasks
 
+    // TODO: Handle background for no data
     // example of transformation, to show empty items background
     val empty: LiveData<Boolean> = Transformations.map(_tasks) { it.isEmpty() }
 
@@ -116,7 +118,6 @@ class TasksViewModel @ViewModelInject constructor(
                 .subscribe({
                     Timber.d("Observing tasks: $it")
                     _allTasks.value = it
-
                 }, {
                     Timber.e("Error observing tasks: $it")
                 })

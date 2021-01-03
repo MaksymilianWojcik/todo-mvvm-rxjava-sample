@@ -7,19 +7,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.Navigation
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.ActivityMainBinding
+import com.mw.todo_mvvm_jetpack_reactive_sample.utils.NavigationDispatcher
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.setupWithNavController
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.whenNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
     private var currentNavController: LiveData<NavController>? = null
     private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var navigationDispatcher: NavigationDispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +34,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         if (savedInstanceState == null) {
             setupBottomNavigation()
         } // else wait for onRestoreInstanceState
+
+        navigationDispatcher.navigationCommands.observe(this) { event ->
+            event.invoke(Navigation.findNavController(this, R.id.nav_host_fragment))
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

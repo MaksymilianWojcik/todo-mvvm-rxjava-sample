@@ -24,8 +24,6 @@ class TasksFragment : Fragment() {
     private lateinit var dataBinding: FragmentTasksBinding
     private val tasksViewModel: TasksViewModel by viewModels()
 
-    private lateinit var tasksAdapter: TasksAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,11 +36,6 @@ class TasksFragment : Fragment() {
         }
         setHasOptionsMenu(true)
         return dataBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupUI()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -100,20 +93,5 @@ class TasksFragment : Fragment() {
             }
             show()
         }
-    }
-
-    private fun setupUI() {
-        tasksViewModel.navigationDestination.observe(viewLifecycleOwner) {
-            when (it) {
-                is TasksNavigationDestination.NewTask -> navigateToNewTask()
-                else -> Timber.w("Navigation destination not handled")
-            }
-        }
-    }
-
-    private fun navigateToNewTask() {
-        // TODO: Pass id for task edit and pass null for new task
-        val action = TasksFragmentDirections.actionTasksFragmentToNewTaskFragment()
-        findNavController().navigate(action)
     }
 }

@@ -8,9 +8,11 @@ import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.ClearCompletedTas
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.GetTasksUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusUseCase.TaskStatus
+import com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment.TasksFragmentDirections
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskFilterType
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskSortingType
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
+import com.mw.todo_mvvm_jetpack_reactive_sample.utils.NavigationDispatcher
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -24,13 +26,11 @@ class TasksViewModel @ViewModelInject constructor(
     private val getTasksUseCase: GetTasksUseCase,
     private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
     private val clearCompletedTasksUseCase: ClearCompletedTasksUseCase,
+    private val navigationDispatcher: NavigationDispatcher,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-
-    private val _navigationDestination = SingleLiveEvent<TasksNavigationDestination>()
-    val navigationDestination = _navigationDestination
 
     // all tasks that are retrieved from firestore
     private val _allTasks = MutableLiveData<List<Task>>(emptyList()) // or .apply { value = emptyList() }
@@ -64,7 +64,10 @@ class TasksViewModel @ViewModelInject constructor(
     }
 
     fun addNewTask() {
-        navigationDestination.value = TasksNavigationDestination.NewTask
+        navigationDispatcher.emit { navController ->
+            // TODO: Pass id for task edit and pass null for new task when clicked, not when addNewTask
+            navController.navigate(TasksFragmentDirections.actionTasksFragmentToNewTaskFragment())
+        }
     }
 
     fun setFilters(taskFilterType: TaskFilterType) {

@@ -50,7 +50,7 @@ class NewTaskViewModel @ViewModelInject constructor(
                 description = description.value!!
             )
             compositeDisposable.add(
-                createNewTaskUseCase.createNewTask(task)
+                createNewTaskUseCase(task)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

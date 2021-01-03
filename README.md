@@ -107,3 +107,25 @@ However in my opinion, the Event approach is also not ideal. It solves the issue
 event and calls `getContentIfNotHandled()` marking it to be read, all other events won't receive it as it was already handled. We could use here the `peekContet()`, but
 than it has no idea that this Event was already handled anytime in the past. To fix that, we could refactor it a little bit and add e.g a Map that marks for which
 observer the content has been handled, like Map of String (a key of a observer's class) and a boolean/int indicating if the content was handled.
+
+#### Kotlin's operator overloading:
+There is a very nice feature in kotlin - operators overloading. Ive added a simple example of overloading `invoke()` operator in the usecases, like so:
+
+```kotlin
+    class GetTasksUseCase @Inject constructor(
+        private val repository: TasksRepository
+    ) {    
+        operator fun invoke(): Observable<List<Task>> = repository.observeTasks()
+    }
+```
+
+Which than we can use like this:
+
+```kotlin
+    //  assume we have an instance like getTasksUseCase: GetTasksUseCase
+    getTasksUseCase()
+        .subscribeOn()
+        ...
+```
+
+There are plenty of more operators available to overload, check the docs [here](https://kotlinlang.org/docs/reference/operator-overloading.html)

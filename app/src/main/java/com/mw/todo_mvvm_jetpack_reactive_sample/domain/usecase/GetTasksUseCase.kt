@@ -9,7 +9,9 @@ import javax.inject.Inject
 class GetTasksUseCase @Inject constructor(
     private val repository: TasksRepository
 ) {
-    fun observeTasks(): Observable<List<Task>> = repository.observeTasks()
+    private fun observeTasks(): Observable<List<Task>> = repository.observeTasks()
 
     fun getAllTasks(): Single<List<Task>> = repository.getAllTasks()
+
+    operator fun invoke() = observeTasks()
 }

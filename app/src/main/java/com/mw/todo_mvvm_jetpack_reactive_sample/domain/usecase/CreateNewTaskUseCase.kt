@@ -8,7 +8,9 @@ import javax.inject.Inject
 class CreateNewTaskUseCase @Inject constructor(
     private val repository: TasksRepository
 ) {
-    fun createNewTask(task: Task): Completable {
+    private fun createNewTask(task: Task): Completable {
         return repository.createNewTask(task)
     }
+
+    operator fun invoke(task: Task) = createNewTask(task)
 }

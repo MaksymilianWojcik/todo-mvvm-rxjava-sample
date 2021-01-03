@@ -110,7 +110,7 @@ class TasksViewModel @ViewModelInject constructor(
 
     private fun observeTasks() {
         compositeDisposable.add(
-            getTasksUseCase.observeTasks()
+            getTasksUseCase()
                 .subscribe({
                     Timber.d("Observing tasks: $it")
                     _allTasks.value = it

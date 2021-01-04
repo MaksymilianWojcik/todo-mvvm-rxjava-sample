@@ -74,9 +74,9 @@ class TasksViewModel @ViewModelInject constructor(
     }
 
     fun addNewTask() {
-        navigationDispatcher.emit { navController ->
+        navigationDispatcher.emit {
             // TODO: Pass id for task edit and pass null for new task when clicked, not when addNewTask
-            navController.navigate(TasksFragmentDirections.actionTasksFragmentToNewTaskFragment())
+            navigate(TasksFragmentDirections.actionTasksFragmentToNewTaskFragment())
         }
     }
 

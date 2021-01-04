@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.ClearCompletedTasksUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.GetTasksUseCase
@@ -33,10 +34,6 @@ class TasksViewModel @ViewModelInject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    // for <include> in fragment_tasks:
-//    val testMessage = MutableLiveData<String>("123")
-//    val testString: ObservableField<String> = ObservableField("12345")
-
     // all tasks that are retrieved from firestore
     private val _allTasks = MutableLiveData<List<Task>>(emptyList()) // or .apply { value = emptyList() }
 
@@ -62,6 +59,15 @@ class TasksViewModel @ViewModelInject constructor(
 
     // example of transformation, to show empty items background
     val empty: LiveData<Boolean> = Transformations.map(_tasks) { it.isEmpty() }
+
+    val emptyDataLabel: LiveData<Int> = Transformations.map(_filterType) {
+        when (it) {
+            TaskFilterType.ALL_TASKS -> R.string.no_tasks_available
+            TaskFilterType.ACTIVE_TASKS -> R.string.no_active_tasks_available
+            TaskFilterType.COMPLETED_TASKS -> R.string.no_completed_tasks_available
+            else -> R.string.no_tasks_available
+        }
+    }
 
     init {
         observeTasks()

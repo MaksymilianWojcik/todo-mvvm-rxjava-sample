@@ -15,6 +15,9 @@
     <string name="error_failed_to_remove_tasks">Nie udało się usunąć zadań. Spróboj ponownie później</string>
     <string name="error_failted_to_fectch_tasks">Nie udało się pobrać zadań. Spróboj ponownie później</string>
     <string name="error_failed_to_change_task_status">Nie udało się zmienić statusu. Spróboj ponownie później</string>
+    <string name="no_active_tasks_available">Brak aktywnych zadań</string>
+    <string name="no_completed_tasks_available">Brak wykonanych zadań</string>
+    <string name="no_tasks_available">Brak zadań</string>
     <!-- New Task -->
     <string name="new_task_label">Nowe zadanie</string>
     <string name="hint_title">Tytuł</string>

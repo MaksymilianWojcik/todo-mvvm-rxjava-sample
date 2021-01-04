@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">todo-mvvm-jetpack-reactive-sample</string>
+    <string name="app_name" translatable="false">ToDoApp</string>
     <!-- Tasks List -->
     <string name="button_new_task">New Task</string>
     <string name="menu_tasks_title">Tasks</string>
@@ -16,6 +16,9 @@
     <string name="error_failed_to_remove_tasks">Failed to remove tasks. Please try again later</string>
     <string name="error_failted_to_fectch_tasks">Failed to fetch tasks. Please try again later</string>
     <string name="error_failed_to_change_task_status">Failed to change task status. Please try again later</string>
+    <string name="no_active_tasks_available">No active tasks</string>
+    <string name="no_completed_tasks_available">No completed tasks</string>
+    <string name="no_tasks_available">No tasks</string>
     <!-- New Task -->
     <string name="new_task_label">New Task</string>
     <string name="hint_title">Title</string>
@@ -26,5 +29,5 @@
     <!-- Settings -->
     <string name="sign_out_label">Sign Out</string>
     <string name="sign_in_label">Sign In</string>
-    <string name="no_tasks_image_description">No tasks image</string>
+    <string name="no_tasks_image_description" translatable="false">No tasks image</string>
 </resources>

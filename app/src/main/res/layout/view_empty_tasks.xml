@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="androidx.core.content.ContextCompat" />
+        <variable
+            name="emptyDataMessage"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/no_tasks_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/no_tasks_icon"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_create_24"
+            android:contentDescription="@string/no_tasks_image_description" />
+
+        <TextView
+            android:id="@+id/no_tasks_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:text="No tasks added"
+            android:text="@{emptyDataMessage}" />
+    </LinearLayout>
+</layout>

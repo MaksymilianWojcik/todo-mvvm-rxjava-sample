@@ -1,7 +1,9 @@
 package com.mw.todo_mvvm_jetpack_reactive_sample.utils
 
 import android.graphics.Paint
+import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,11 @@ fun setStyle(textView: TextView, enabled: Boolean) {
     } else {
         textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
     }
+}
+
+@BindingAdapter("app:visibility")
+fun setVisibility(view: View, isVisible: Boolean) {
+    view.isVisible = isVisible
 }
 
 // Example of settingAdapter via custom BindingAdapter. Please note, that in xml this has to be

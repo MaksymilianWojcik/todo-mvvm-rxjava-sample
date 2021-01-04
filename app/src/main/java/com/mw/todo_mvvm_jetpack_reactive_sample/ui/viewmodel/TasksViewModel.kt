@@ -1,5 +1,6 @@
 package com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel
 
+import androidx.databinding.ObservableField
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -32,6 +33,10 @@ class TasksViewModel @ViewModelInject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
+    // for <include> in fragment_tasks:
+//    val testMessage = MutableLiveData<String>("123")
+//    val testString: ObservableField<String> = ObservableField("12345")
+
     // all tasks that are retrieved from firestore
     private val _allTasks = MutableLiveData<List<Task>>(emptyList()) // or .apply { value = emptyList() }
 
@@ -55,7 +60,6 @@ class TasksViewModel @ViewModelInject constructor(
     }
     val tasks: LiveData<List<Task>> = _tasks
 
-    // TODO: Handle background for no data
     // example of transformation, to show empty items background
     val empty: LiveData<Boolean> = Transformations.map(_tasks) { it.isEmpty() }
 
@@ -122,6 +126,7 @@ class TasksViewModel @ViewModelInject constructor(
                     Timber.d("Observing tasks: $it")
                     _allTasks.value = it
                 }, {
+                    // TODO: Handle showing error as a background
                     Timber.e("Error observing tasks: $it")
                 })
         )

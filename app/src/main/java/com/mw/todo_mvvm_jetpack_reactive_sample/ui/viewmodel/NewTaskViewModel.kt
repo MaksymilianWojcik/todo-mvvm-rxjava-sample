@@ -8,7 +8,6 @@ import androidx.lifecycle.map
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.CreateNewTaskUseCase
-import com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment.NewTaskFragment
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.SingleLiveEvent
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.validateSources
 import io.reactivex.android.schedulers.AndroidSchedulers

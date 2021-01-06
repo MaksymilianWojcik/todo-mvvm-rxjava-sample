@@ -10,8 +10,8 @@ import javax.inject.Singleton
 
 private const val CRASHLYTICS_KEY_PRIORITY = "CRASH_PRIORITY"
 private const val CRASHLYTICS_KEY_TAG = "CRASH_TAG"
-
 private const val KEY_ANALYTICS_PREFERENCES = "analyticsKey"
+private const val CONSENT_DIALOG_ENABLED = false
 
 @Singleton
 class AnalyticsTracker @Inject constructor(
@@ -29,7 +29,7 @@ class AnalyticsTracker @Inject constructor(
     }
 
     // TODO: Show dialog asking for user consent in the future
-    fun shouldAskForUserConsent(): Boolean = false
+    fun shouldAskForUserConsent(): Boolean = CONSENT_DIALOG_ENABLED
 
     fun trackScreen(activity: Activity, screenName: String) {
         if (isEnabled().not()) return
@@ -58,7 +58,7 @@ class AnalyticsTracker @Inject constructor(
         firebaseCrashlytics.apply {
             setCustomKey(CRASHLYTICS_KEY_PRIORITY, priority)
             setCustomKey(CRASHLYTICS_KEY_TAG, tag ?: "")
-            // To give yourself more context for the events leading up to a crash, you can add custom Crashlytics logs to your app.
+            // To give yourself more context for the events leading to a crash, you can add custom Crashlytics logs to your app
             // Crashlytics associates the logs with your crash data and displays them in the Crashlytics page under the Logs tab
             log(message)
             throwable?.let { recordException(it) }

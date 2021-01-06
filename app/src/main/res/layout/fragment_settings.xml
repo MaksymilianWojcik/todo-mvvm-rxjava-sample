@@ -35,7 +35,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textSize="18sp"
-                    android:text="Measurement and performance"/>
+                    android:text="@string/measurement_and_performance" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:layout_weight="0.8"
                     android:onCheckedChanged="@{(view, isChecked) -> viewModel.enableAnalytics(isChecked)}"
                     android:checked="@={viewModel.analyticsEnabled}"
-                    android:gravity="center"/>
+                    android:gravity="center" />
 
             </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:text="@{context.getString(viewModel.signInOutButtonLabel)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

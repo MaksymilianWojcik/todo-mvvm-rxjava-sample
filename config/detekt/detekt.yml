@@ -65,7 +65,7 @@ complexity:
   active: true
   ComplexCondition:
     active: true
-    threshold: 3
+    threshold: 4
   ComplexInterface:
     active: false
     threshold: 10
@@ -73,7 +73,7 @@ complexity:
     includePrivateDeclarations: false
   ComplexMethod:
     active: true
-    threshold: 10
+    threshold: 15
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
@@ -83,10 +83,10 @@ complexity:
     ignoredLabels: []
   LargeClass:
     active: true
-    threshold: 300
+    threshold: 600
   LongMethod:
     active: true
-    threshold: 30
+    threshold: 60
   LongParameterList:
     active: true
     functionThreshold: 10
@@ -207,7 +207,7 @@ exceptions:
   ThrowingNewInstanceOfSameException:
     active: false
   TooGenericExceptionCaught:
-    active: true
+    active: false
     excludes: []
     exceptionNames:
       - ArrayIndexOutOfBoundsException
@@ -224,12 +224,11 @@ exceptions:
     exceptionNames:
       - Error
       - Exception
-      - NullPointerException
       - Throwable
       - RuntimeException
 
 formatting:
-  active: false
+  active: true
   android: false
   autoCorrect: true
   AnnotationOnSeparateLine:
@@ -308,7 +307,7 @@ formatting:
     active: true
     autoCorrect: true
   NoWildcardImports:
-    active: true
+    active: false
   PackageName:
     active: true
     autoCorrect: true
@@ -385,7 +384,7 @@ naming:
   FunctionNaming:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-    functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
+    functionPattern: '([a-z][a-zA-Z0-9]*)|(`.*`)'
     excludeClassPattern: '$^'
     ignoreOverridden: true
     ignoreAnnotated: ['Composable']
@@ -434,7 +433,7 @@ naming:
   VariableNaming:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-    variablePattern: '^(_)?[a-z$][a-zA-Z$0-9]*$'
+    variablePattern: '[a-z][A-Za-z0-9]*'
     privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
     ignoreOverridden: true
@@ -553,16 +552,16 @@ style:
     ignoreOverridden: false
     ignoreUsageInGenerics: false
   FunctionOnlyReturningConstant:
-    active: false
+    active: true
     ignoreOverridableFunction: true
     excludedFunctions: 'describeContents'
     excludeAnnotatedFunction: ['dagger.Provides']
   LibraryCodeMustSpecifyReturnType:
-    active: false
+    active: true
   LibraryEntitiesShouldNotBePublic:
     active: false
   LoopWithTooManyJumpStatements:
-    active: false
+    active: true
     maxJumpCount: 1
   MagicNumber:
     active: true
@@ -584,11 +583,11 @@ style:
   MaxLineLength:
     active: true
     maxLineLength: 130
-    excludePackageStatements: false
-    excludeImportStatements: false
+    excludePackageStatements: true
+    excludeImportStatements: true
     excludeCommentStatements: false
   MayBeConst:
-    active: false
+    active: true
   ModifierOrder:
     active: true
   NestedClassesVisibility:

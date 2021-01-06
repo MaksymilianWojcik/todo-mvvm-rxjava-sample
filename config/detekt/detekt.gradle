@@ -1,20 +1,24 @@
 apply plugin: 'io.gitlab.arturbosch.detekt'
 
+println "Root project:   ${project.rootProject}";
+println "  rootDir:      ${project.rootDir}"
+println "  projectDir:   ${project.projectDir}";
+println "  project dir:  ${System.getProperty("user.dir")}"
+
+//Root project:   root project 'todo-mvvm-jetpack-reactive-sample'
+//rootDir:      /private/var/maksymilian.wojcik/ws-priv/todomvvmjetpackreactivesample
+//projectDir:   /private/var/maksymilian.wojcik/ws-priv/todomvvmjetpackreactivesample/app
+//project dir:  /private/var/maksymilian.wojcik/ws-priv/todomvvmjetpackreactivesample
+
 detekt {
     toolVersion = Versions.DETEKT
-    config = files(file(rootProject.file("config/detekt/detekt.yml")))
+    config = files("$rootDir/config/detekt/detekt.yml")
     failFast = false
     parallel = true
     disableDefaultRuleSets = false
     reports {
-        xml {
-            enabled = true
-        }
-        html {
-            enabled = false
-        }
-        txt {
-            enabled = false
-        }
+        xml.enabled = true
+        html.enabled = false
+        txt.enabled = false
     }
 }

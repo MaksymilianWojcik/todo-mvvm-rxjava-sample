@@ -1,6 +1,5 @@
 package com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel
 
-import androidx.databinding.ObservableField
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -13,12 +12,8 @@ import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.UpdateTaskStatusU
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment.TasksFragmentDirections
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskFilterType
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskSortingType
-import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.NavigationDispatcher
-import com.mw.todo_mvvm_jetpack_reactive_sample.utils.SingleLiveEvent
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 private const val KEY_TASKS_FILTER_SAVED_STATE = "keyTasksFilter"
@@ -57,7 +52,7 @@ class TasksViewModel @ViewModelInject constructor(
     }
     val tasks: LiveData<List<Task>> = _tasks
 
-    // example of transformation, to show empty items background
+    // to show empty items background
     val empty: LiveData<Boolean> = Transformations.map(_tasks) { it.isEmpty() }
 
     val emptyDataLabel: LiveData<Int> = Transformations.map(_filterType) {

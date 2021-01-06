@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.NewTaskViewModel" />
@@ -23,7 +24,7 @@
                 android:paddingLeft="@dimen/grid_16"
                 android:paddingTop="@dimen/grid_16"
                 android:paddingRight="@dimen/grid_16"
-                android:paddingBottom="@dimen/grid_16" >
+                android:paddingBottom="@dimen/grid_16">
 
                 <EditText
                     android:id="@+id/add_task_title_edit_text"
@@ -31,11 +32,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_title"
+                    android:autofillHints="@string/hint_task_description"
                     android:imeOptions="flagNoExtractUi"
                     android:maxLines="1"
                     android:text="@={viewModel.title}"
                     android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:inputType="text" />
 
                 <EditText
                     android:id="@+id/add_task_description_edit_text"
@@ -44,8 +47,10 @@
                     android:layout_height="350dp"
                     android:gravity="top"
                     android:hint="@string/hint_task_description"
+                    android:autofillHints="@string/hint_task_description"
                     android:text="@={viewModel.description}"
-                    android:imeOptions="flagNoExtractUi" />
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="textMultiLine" />
             </LinearLayout>
 
         </ScrollView>
@@ -60,7 +65,8 @@
             app:fabSize="normal"
             android:enabled="@{viewModel.isFormValid()}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/save_task_fab_content_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,6 +8,8 @@
     <string name="menu_active_title">Aktywne</string>
     <string name="menu_completed_title">Wykonane</string>
     <string name="menu_all_title">Wszystkie</string>
+    <string name="menu_sort">Sortuj</string>
+    <string name="menu_filter">Filtry</string>
     <string name="menu_sort_asc_title">Rosnąco</string>
     <string name="menu_sort_desc_title">Malejąco</string>
     <string name="task_completed_cleared">Wykonane zadnia usunięte</string>
@@ -28,4 +30,5 @@
     <!-- Settings -->
     <string name="sign_out_label">Wyloguj się</string>
     <string name="sign_in_label">Zaloguj się</string>
+    <string name="measurement_and_performance">Pomiary i wydajność</string>
 </resources>

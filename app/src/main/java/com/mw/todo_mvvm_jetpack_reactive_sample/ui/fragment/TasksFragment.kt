@@ -5,18 +5,13 @@ import android.view.*
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.FragmentTasksBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.adapters.TasksAdapter
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskFilterType
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskSortingType
-import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TasksNavigationDestination
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import java.lang.RuntimeException
 
 @AndroidEntryPoint
 class TasksFragment : Fragment() {

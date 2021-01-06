@@ -1,7 +1,7 @@
 package com.mw.todo_mvvm_jetpack_reactive_sample.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.observe
@@ -13,7 +13,6 @@ import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.ActivityMainBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.NavigationDispatcher
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.setupWithNavController
-import com.mw.todo_mvvm_jetpack_reactive_sample.utils.whenNotNull
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject

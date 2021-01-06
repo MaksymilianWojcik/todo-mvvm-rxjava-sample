@@ -1,3 +1,10 @@
 <lint>
     <issue id="HardcodedText" severity="error" />
+    <issue id="AlwaysShowAction">
+        <ignore path="src/main/res/menu/tasks_menu.xml" />
+    </issue>
+    <issue id="UnusedResources">
+        <!-- Temporary -->
+        <ignore path="src/main/res/values/strings.xml" />
+    </issue>
 </lint>

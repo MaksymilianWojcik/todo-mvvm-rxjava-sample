@@ -7,6 +7,7 @@ object Versions {
     const val GRADLE_PLUGIN = "4.1.0"
     const val KOTLIN = "1.3.72"
     const val GOOGLE_SERVICES = "4.3.4"
+    const val DETEKT = "1.15.0"
 
     const val FIREBASE_BOM = "26.1.1"
     const val FIREBASE_CRASHLYTICS = "2.4.1"

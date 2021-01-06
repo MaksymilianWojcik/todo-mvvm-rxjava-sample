@@ -1,0 +1,20 @@
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+detekt {
+    toolVersion = Versions.DETEKT
+    config = files(file(rootProject.file("config/detekt/detekt.yml")))
+    failFast = false
+    parallel = true
+    disableDefaultRuleSets = false
+    reports {
+        xml {
+            enabled = true
+        }
+        html {
+            enabled = false
+        }
+        txt {
+            enabled = false
+        }
+    }
+}

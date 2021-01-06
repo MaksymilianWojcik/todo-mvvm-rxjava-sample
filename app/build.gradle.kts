@@ -1,3 +1,5 @@
+apply(from = rootProject.file("config/detekt/detekt.gradle"))
+
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
@@ -6,7 +8,6 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("com.google.firebase.crashlytics")
-
 }
 
 android {

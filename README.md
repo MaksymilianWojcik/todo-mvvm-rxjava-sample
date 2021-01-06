@@ -24,6 +24,14 @@ and uses:
 - Configure lint & detekt
 - Glide
 
+## Pre settings & tools for AS
+#### SaveActions
+Install SaveActions plugin and copy to it settings from `saveactions_settings.xml` (or just copy file into `./idea/`). This might
+require AS restart.
+
+#### Code style
+Copy settings from `LetsPlayJavaKotlinCodeStyle.xml` to AS preferences (Preferences -> Editor -> Code style -> import scheme)
+
 ## Notes
 
 #### Firebase analytics

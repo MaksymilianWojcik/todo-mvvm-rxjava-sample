@@ -24,8 +24,15 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        getByName("debug") {
             isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -39,6 +46,15 @@ android {
 
     buildFeatures {
         dataBinding = true
+    }
+
+    lintOptions {
+//        baselineFile = rootProject.file("lint-baseline.xml") // for whole project
+        baselineFile = project.file("lint-baseline.xml") // for module
+        isAbortOnError = true // true by default tho
+        isWarningsAsErrors = true
+        xmlReport = true
+        htmlReport = false
     }
 }
 

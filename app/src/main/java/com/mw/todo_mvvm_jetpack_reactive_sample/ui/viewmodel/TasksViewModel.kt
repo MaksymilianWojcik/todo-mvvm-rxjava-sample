@@ -13,6 +13,7 @@ import com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment.TasksFragmentDirecti
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskFilterType
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.model.TaskSortingType
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.NavigationDispatcher
+import com.mw.todo_mvvm_jetpack_reactive_sample.utils.ioToMain
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 
@@ -123,11 +124,13 @@ class TasksViewModel @ViewModelInject constructor(
     private fun observeTasks() {
         compositeDisposable.add(
             getTasksUseCase()
+                .ioToMain()
                 .subscribe({
                     Timber.d("Observing tasks: $it")
                     _allTasks.value = it
                 }, {
                     // TODO: Handle showing error as a background
+                    _allTasks.value = emptyList()
                     Timber.e("Error observing tasks: $it")
                 })
         )

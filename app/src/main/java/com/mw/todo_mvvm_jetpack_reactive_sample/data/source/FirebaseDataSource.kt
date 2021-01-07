@@ -4,9 +4,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -100,9 +98,11 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
 
     /**
      * Returns task list observable with real time firestore updates
+     * We don't need to use Flowable as we don't have a lot of items over time being emitted that we have to control.
+     * Observable is fine as we have only a few of them and no risk of any overflooding. Its a cold source example.
      */
-    fun observeTasks(): Observable<List<Task>> {
-        return Observable.create { emitter ->
+    fun observeTasks(): Flowable<List<Task>> {
+        return Flowable.create({ emitter ->
             tasksRef.addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     emitter.onError(error)
@@ -113,7 +113,7 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
                     } ?: emitter.onError(Throwable("Empty snapshot"))
                 }
             }
-        }
+        }, BackpressureStrategy.DROP)
     }
 
     /**

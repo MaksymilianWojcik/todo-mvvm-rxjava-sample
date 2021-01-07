@@ -9,10 +9,9 @@ import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.CreateNewTaskUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.SingleLiveEvent
+import com.mw.todo_mvvm_jetpack_reactive_sample.utils.ioToMain
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.validateSources
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class NewTaskViewModel @ViewModelInject constructor(
@@ -50,8 +49,7 @@ class NewTaskViewModel @ViewModelInject constructor(
             )
             compositeDisposable.add(
                 createNewTaskUseCase(task)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .ioToMain()
                     .subscribe({
                         Timber.d("Created new meeting")
                         // TODO: UIState example, although its not necessary in our example

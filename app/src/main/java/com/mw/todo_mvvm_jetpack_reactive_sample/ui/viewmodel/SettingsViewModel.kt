@@ -62,7 +62,11 @@ class SettingsViewModel @ViewModelInject constructor(
                 signInUseCase.signInWithEmail(MOCKED_TEST_EMAIL, MOCKED_TEST_PASSWORD) // TODO: two-way databinding
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe()
+                    .subscribe({
+                        Timber.d("All good")
+                    }, {
+                        Timber.d("Error")
+                    })
             )
         }
     }

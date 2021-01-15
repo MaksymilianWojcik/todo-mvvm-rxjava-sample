@@ -59,7 +59,10 @@ class SettingsViewModel @ViewModelInject constructor(
             signOutUseCase.signOut()
         } else {
             compositeDisposable.add(
-                signInUseCase.signInWithEmail(MOCKED_TEST_EMAIL, MOCKED_TEST_PASSWORD) // TODO: two-way databinding
+                signInUseCase.signInWithEmail(
+                    MOCKED_TEST_EMAIL,
+                    MOCKED_TEST_PASSWORD
+                ) // TODO: two-way databinding
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

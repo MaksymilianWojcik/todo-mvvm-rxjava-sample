@@ -34,4 +34,12 @@
     <string name="sign_in_label">Sign In</string>
     <string name="no_tasks_image_description" translatable="false">No tasks image</string>
     <string name="measurement_and_performance">Measurement and performance</string>
+    <!-- Errors -->
+    <string name="error_login_invalid_credentials">Email or password invalid</string>
+    <string name="error_login_invalid_email">The email address is badly formatted</string>
+    <string name="error_login_unknown">Something went wrong. Please try again later</string>
+    <string name="error_login_invalid_arguments">Email or password cannot be empty</string>
+    <string name="error_no_network_connection">Something went wrong. Please check your network connection</string>
+    <string name="error_unauthenticated_user">You must log in first</string>
+    <string name="error_password_too_weak">Password should be at least 6 characters long</string>
 </resources>

@@ -181,3 +181,46 @@ This is because when we define `app:items`, we actually dont have adapter ready 
         app:items="@{viewModel.tasks}"
         app:setAdapter="@{tasksAdapter}" />
 ```
+#### Continuous Observable emitting on error - Firebase EventListener (snapshotListener) stops listening after error from firebase
+
+Here's explanation for the bug that we were trying to fix with continuous listening after an error (like firebase security
+permissions denied) happens on snapshot listener.
+The problem here is that after an error listener won't receive any events,and so we don't need to detach our listener. So the
+solution for this is to add a snapshotListener again.
+
+So as we have an Observable:
+
+```kotlin
+fun observeTasks(): Observable<List<Task>> {
+    return Observable.create { emitter ->
+        tasksRef.addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                emitter.onError(error)
+            } else {
+                snapshot?.let { querySnapshot ->
+                    val tasksList = querySnapshot.toObjects(Task::class.java)
+                    emitter.onNext(tasksList)
+                } ?: emitter.onError(Throwable("Empty snapshot"))
+            }
+        }
+    }
+}
+```
+
+Than even if in the subscriber we would avoid stopping observable on error (there are some ways):
+```kotlin
+ .onErrorResumeNext { _: Throwable -> Observable.empty() }
+ // .onErrorResumeNext(Observable.empty())
+ // .onErrorReturn((e) -> Collections.emptyList()) // or like this for flatMapped observable
+```
+it would still stop emitting items, because the snapshotListener won't receive anything anymore.
+
+So the solution is to call `observeTasks()` again (for example after we login, or press try again button etc.).
+
+Error handling operators:
+`onError...()` -  It's like the try/catch of Rx:
+`onErrorResumeNext()` — instructs an Observable to emit a sequence of items if it encounters an error
+`onErrorReturn()` — instructs an Observable to emit a particular item when it encounters an error
+`onExceptionResumeNext()` — instructs an Observable to continue emitting items after it encounters an exception (but not another variety of throwable)
+`retry()` — if a source Observable emits an error, resubscribe to it in the hopes that it will complete without error
+`retryWhen()` — if a source Observable emits an error, pass that error to another Observable to determine whether to resubscribe to the source

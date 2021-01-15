@@ -4,7 +4,9 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
-import io.reactivex.*
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Single
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,20 +20,21 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
     fun clearCompletedTasks(): Completable {
         // one way, performing query on firestore - extra calls for querying
         return Completable.create { emitter ->
-            tasksRef.whereEqualTo(FIELD_TASK_IS_COMPLETED, true).get().addOnSuccessListener { querySnapshot ->
-                val batch = dbRef.batch()
-                querySnapshot.forEach { doc ->
-                    batch.delete(doc.reference)
-                }
-                batch.commit()
-                    .addOnSuccessListener {
-                        emitter.onComplete()
-                    }.addOnFailureListener {
-                        emitter.onError(it)
+            tasksRef.whereEqualTo(FIELD_TASK_IS_COMPLETED, true).get()
+                .addOnSuccessListener { querySnapshot ->
+                    val batch = dbRef.batch()
+                    querySnapshot.forEach { doc ->
+                        batch.delete(doc.reference)
                     }
-            }.addOnFailureListener {
-                emitter.onError(it)
-            }
+                    batch.commit()
+                        .addOnSuccessListener {
+                            emitter.onComplete()
+                        }.addOnFailureListener {
+                            emitter.onError(it)
+                        }
+                }.addOnFailureListener {
+                    emitter.onError(it)
+                }
         }
     }
 
@@ -101,11 +104,13 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
      * We don't need to use Flowable as we don't have a lot of items over time being emitted that we have to control.
      * Observable is fine as we have only a few of them and no risk of any overflooding. Its a cold source example.
      */
-    fun observeTasks(): Flowable<List<Task>> {
-        return Flowable.create({ emitter ->
+    fun observeTasks(): Observable<List<Task>> {
+        return Observable.create { emitter ->
             tasksRef.addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    emitter.onError(error)
+//                    emitter.onError(error)
+                    // TODO: Response wrapper for handling State so we can emit onNext with State instead of empty list or onError
+                    emitter.onNext(emptyList())
                 } else {
                     snapshot?.let { querySnapshot ->
                         val tasksList = querySnapshot.toObjects(Task::class.java)
@@ -113,7 +118,7 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
                     } ?: emitter.onError(Throwable("Empty snapshot"))
                 }
             }
-        }, BackpressureStrategy.DROP)
+        }
     }
 
     /**
@@ -155,11 +160,12 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
     }
 
     /**
-     * Creates a new tas in firestore. This disables offline syncing so exceptions can be handled
+     * Creates a new task in firestore. This disables offline syncing so exceptions can be handled
      */
     fun createTaskWithoutOfflineSyncing(task: Task): Completable {
         return Completable.create { emitter ->
             val tasksDoc = tasksRef.document()
+            task.id = tasksDoc.id
             dbRef.runTransaction { transaction ->
                 transaction.set(tasksDoc, task)
             }.addOnCompleteListener {
@@ -185,7 +191,10 @@ class FirebaseDataSource @Inject constructor(private val dbRef: FirebaseFirestor
     }
 
     // This function sets provided document with provided data. This reduces boilerplate
-    private fun setDocumentCompletable(documentReference: DocumentReference, data: Any): Completable {
+    private fun setDocumentCompletable(
+        documentReference: DocumentReference,
+        data: Any
+    ): Completable {
         return Completable.create { emitter ->
             documentReference.set(data)
                 .addOnSuccessListener {

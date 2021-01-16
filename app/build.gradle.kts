@@ -104,12 +104,14 @@ dependencies {
     implementation(Libs.RX_JAVA)
     implementation(Libs.RX_ANDROID)
 
-
     testImplementation("junit:junit:4.13.1")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 
-
     // unit tests
-    testImplementation("io.mockk:mockk:1.10.5")
+    testImplementation(TestLibs.MOCKK)
+    testImplementation(TestLibs.MOCKITO_KOTLIN)
+    testImplementation(TestLibs.JUNIT_KOTLIN)
+
 }

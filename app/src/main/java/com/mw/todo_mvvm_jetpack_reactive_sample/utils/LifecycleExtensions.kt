@@ -6,7 +6,9 @@ import androidx.lifecycle.MediatorLiveData
 fun validateSources(vararg liveDatas: LiveData<Boolean>): LiveData<Boolean> {
     return MediatorLiveData<Boolean>().also { mediatorLiveData ->
         // check current values at the moment of declaration
-        mediatorLiveData.value = liveDatas.all { it.value == true }
+        mediatorLiveData.value = liveDatas.all {
+            it.value == true
+        }
 
         // observe source liveDatas
         for (source in liveDatas) {

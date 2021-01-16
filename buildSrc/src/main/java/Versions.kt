@@ -23,4 +23,8 @@ object Versions {
     const val HILT_VIEWMODEL = "1.0.0-alpha02"
     const val RX_JAVA = "2.2.19"
     const val RX_ANDROID = "2.1.1"
+
+    // Tests
+    const val MOCKK = "1.10.5"
+    const val MOCKITO_KOTLIN = "2.2.0"
 }

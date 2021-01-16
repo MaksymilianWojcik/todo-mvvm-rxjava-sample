@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.CreateNewTaskUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.NewTaskViewModel
+import com.nhaarman.mockitokotlin2.inOrder
 import common.RxImmediateSchedulerRule
 import common.getOrAwaitValue
 import io.mockk.every
@@ -18,6 +19,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
@@ -116,6 +118,10 @@ class NewTaskViewModelTest {
         assertEquals(false, cut.loadingData.value)
         com.nhaarman.mockitokotlin2.verify(loadingObserver2).onChanged(false)
         com.nhaarman.mockitokotlin2.verify(loadingObserver2).onChanged(true)
+        inOrder(loadingObserver2) {
+            Mockito.verify(loadingObserver2).onChanged(true)
+            Mockito.verify(loadingObserver2).onChanged(false)
+        }
     }
 
     @Test

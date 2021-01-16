@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 /**
+ * https://medium.com/androiddevelopers/unit-testing-livedata-and-other-common-observability-problems-bb477262eb04
  * Gets the value of a [LiveData] or waits for it to have one, with a timeout.
  *
  * Use this extension from host-side (JVM) tests. It's recommended to use it alongside

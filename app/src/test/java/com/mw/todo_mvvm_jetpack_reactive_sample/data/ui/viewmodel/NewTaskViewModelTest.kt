@@ -6,6 +6,7 @@ import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.domain.usecase.CreateNewTaskUseCase
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.NewTaskViewModel
 import common.RxImmediateSchedulerRule
+import common.getOrAwaitValue
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -16,6 +17,8 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -31,6 +34,9 @@ class NewTaskViewModelTest {
     @Rule
     @JvmField
     var testSchedulerRule = RxImmediateSchedulerRule()
+
+    @Mock
+    lateinit var loadingObserver2: Observer<Boolean>
 
     val createNewTaskUseCase = mockk<CreateNewTaskUseCase>()
 
@@ -58,12 +64,14 @@ class NewTaskViewModelTest {
 
     @Before
     fun setUp() {
+        MockitoAnnotations.initMocks(this)
         cut = NewTaskViewModel(createNewTaskUseCase)
         with(cut) {
             title.observeForever(titleObserver)
             description.observeForever(descriptionObserver)
             isFormValid.observeForever(isFormValidObserver)
             loadingData.observeForever(loadingDataObserver)
+            loadingData.observeForever(loadingObserver2)
         }
     }
 
@@ -82,6 +90,7 @@ class NewTaskViewModelTest {
         assertTrue { titleChangesList.isEmpty() }
         assertTrue { descriptionChangesList.isEmpty() }
         assertFalse { isFormValidChangesList.isEmpty() } // false because we already observer and its a transformation
+        assertEquals(cut.isFormValid.getOrAwaitValue(), false)
     }
 
     @Test
@@ -105,6 +114,8 @@ class NewTaskViewModelTest {
         assertNotNull(cut.snackbarMessage.value)
         assertNotNull(cut.closeScreen.value)
         assertEquals(false, cut.loadingData.value)
+        com.nhaarman.mockitokotlin2.verify(loadingObserver2).onChanged(false)
+        com.nhaarman.mockitokotlin2.verify(loadingObserver2).onChanged(true)
     }
 
     @Test

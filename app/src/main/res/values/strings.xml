@@ -42,4 +42,7 @@
     <string name="error_no_network_connection">Something went wrong. Please check your network connection</string>
     <string name="error_unauthenticated_user">You must log in first</string>
     <string name="error_password_too_weak">Password should be at least 6 characters long</string>
+    <string name="account_button_content_description">Account button</string>
+    <string name="sorting_button_content_description">sorting button content description</string>
+    <string name="filter_button_content_description">filter button content description</string>
 </resources>

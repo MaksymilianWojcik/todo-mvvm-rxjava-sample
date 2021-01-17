@@ -41,13 +41,12 @@
 
                 <include
                     android:id="@+id/logo"
-                    style="@style/ToolbarStyle"
                     android:layout_margin="20dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     layout="@layout/view_slogan" />
 
-                <ImageView
+                <ImageButton
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_gravity="end|center"
@@ -57,7 +56,11 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="20dp"
-                    android:src="@drawable/ic_baseline_account_circle_24" />
+                    android:src="@drawable/ic_baseline_account_circle_24"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="centerCrop"
+                    android:onClick="@{() -> viewModel.showProfile()}"
+                    android:contentDescription="@string/account_button_content_description" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -78,31 +81,35 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/sortingButton"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_baseline_sort_by_alpha_24"
                     app:layout_constraintStart_toEndOf="@id/searchView"
                     app:layout_constraintTop_toTopOf="@id/searchView"
-                    app:layout_constraintBottom_toBottomOf="@id/searchView" />
+                    app:layout_constraintBottom_toBottomOf="@id/searchView"
+                    android:contentDescription="@string/sorting_button_content_description" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/filterButton"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_baseline_filter_list_24"
                     app:layout_constraintStart_toEndOf="@id/searchView"
                     app:layout_constraintTop_toTopOf="@id/searchView"
-                    app:layout_constraintBottom_toBottomOf="@id/searchView" />
-
+                    app:layout_constraintBottom_toBottomOf="@id/searchView"
+                    android:contentDescription="@string/filter_button_content_description" />
 
             </LinearLayout>
-
 
         </com.google.android.material.appbar.AppBarLayout>
 

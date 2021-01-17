@@ -1,12 +1,10 @@
 package com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
@@ -23,7 +21,6 @@ class TasksFragment : Fragment() {
     private lateinit var dataBinding: FragmentTasksBinding
     private val tasksViewModel: TasksViewModel by viewModels()
 
-    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,7 +31,6 @@ class TasksFragment : Fragment() {
             viewModel = tasksViewModel
             tasksAdapter = TasksAdapter(tasksViewModel)
         }
-        (activity as AppCompatActivity).supportActionBar?.setShowHideAnimationEnabled(false)
         return dataBinding.root
     }
 

@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             setupBottomNavigation()
         } // else wait for onRestoreInstanceState
 
+        setSupportActionBar(binding.customToolbar)
+
         navigationDispatcher.navigationCommands.observe(this) { command ->
             Navigation.findNavController(this, R.id.nav_host_fragment).command(this)
             // or: command.invoke(Navigation.findNavController(this, R.id.nav_host_fragment), this)

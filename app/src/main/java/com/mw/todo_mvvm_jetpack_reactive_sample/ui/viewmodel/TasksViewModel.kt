@@ -76,6 +76,12 @@ class TasksViewModel @ViewModelInject constructor(
         }
     }
 
+    fun showProfile() {
+        navigationDispatcher.emit {
+            navigate(TasksFragmentDirections.actionTasksFragmentToNewTaskFragment())
+        }
+    }
+
     fun setFilters(taskFilterType: TaskFilterType) {
         // we don't need to set _filterType.value here, as savedStateHandle will update it via LiveData
         savedStateHandle.set(KEY_TASKS_FILTER_SAVED_STATE, taskFilterType)

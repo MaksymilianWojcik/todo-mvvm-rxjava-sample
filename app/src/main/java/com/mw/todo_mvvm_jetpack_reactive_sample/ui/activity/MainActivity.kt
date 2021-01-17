@@ -52,8 +52,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     ) {
         Timber.d("Destination changed: ${controller.graph}, dest: $destination")
         when (destination.id) {
-            R.id.newTaskFragment -> binding.bottomNav.isVisible = false
-            else -> binding.bottomNav.isVisible = true
+            R.id.newTaskFragment -> {
+                binding.bottomNav.isVisible = false
+                supportActionBar?.show()
+            }
+            else -> {
+                binding.bottomNav.isVisible = true
+                supportActionBar?.hide()
+            }
         }
     }
 

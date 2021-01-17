@@ -1,7 +1,9 @@
 package com.mw.todo_mvvm_jetpack_reactive_sample.ui.fragment
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,6 +21,7 @@ class TasksFragment : Fragment() {
     private lateinit var dataBinding: FragmentTasksBinding
     private val tasksViewModel: TasksViewModel by viewModels()
 
+    //    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,35 +32,48 @@ class TasksFragment : Fragment() {
             viewModel = tasksViewModel
             tasksAdapter = TasksAdapter(tasksViewModel)
         }
-        setHasOptionsMenu(true)
+//        (activity as AppCompatActivity).supportActionBar?.setShowHideAnimationEnabled(false)
         return dataBinding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.tasks_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_clear_completed -> {
-                tasksViewModel.clearCompletedTasks()
-                true
-            }
-            R.id.menu_clear_active -> {
-                tasksViewModel.clearActiveTasks()
-                true
-            }
-            R.id.menu_filter -> {
-                showFiltersMenu()
-                true
-            }
-            R.id.menu_sort -> {
-                showSortingMenu()
-                true
-            }
-            else -> false
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dataBinding.filterButton.setOnClickListener {
+            showFiltersMenu2()
+        }
+        dataBinding.sortingButton.setOnClickListener {
+            showSortingMenu2()
+        }
+        dataBinding.accountIV.setOnClickListener {
+            tasksViewModel.showProfile()
         }
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.tasks_menu, menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.menu_clear_completed -> {
+//                tasksViewModel.clearCompletedTasks()
+//                true
+//            }
+//            R.id.menu_clear_active -> {
+//                tasksViewModel.clearActiveTasks()
+//                true
+//            }
+//            R.id.menu_filter -> {
+//                showFiltersMenu()
+//                true
+//            }
+//            R.id.menu_sort -> {
+//                showSortingMenu()
+//                true
+//            }
+//            else -> false
+//        }
+//    }
 
     private fun showFiltersMenu() {
         val view = activity?.findViewById<View>(R.id.menu_filter) ?: return
@@ -75,8 +91,39 @@ class TasksFragment : Fragment() {
         }
     }
 
+    private fun showFiltersMenu2() {
+        val view = activity?.findViewById<View>(R.id.filterButton) ?: return
+        PopupMenu(requireContext(), view).run {
+            menuInflater.inflate(R.menu.tasks_filter_menu, menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.allTasksFilter -> tasksViewModel.setFilters(TaskFilterType.ALL_TASKS)
+                    R.id.activeTasksFilter -> tasksViewModel.setFilters(TaskFilterType.ACTIVE_TASKS)
+                    R.id.completedTasksFilter -> tasksViewModel.setFilters(TaskFilterType.COMPLETED_TASKS)
+                }
+                true
+            }
+            show()
+        }
+    }
+
     private fun showSortingMenu() {
         val view = activity?.findViewById<View>(R.id.menu_sort) ?: return
+        PopupMenu(requireContext(), view).run {
+            menuInflater.inflate(R.menu.tasks_sort_menu, menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.ascSorting -> tasksViewModel.setSorting(TaskSortingType.ASCENDING)
+                    R.id.descSorting -> tasksViewModel.setSorting(TaskSortingType.DESCENDING)
+                }
+                true
+            }
+            show()
+        }
+    }
+
+    private fun showSortingMenu2() {
+        val view = activity?.findViewById<View>(R.id.sortingButton) ?: return
         PopupMenu(requireContext(), view).run {
             menuInflater.inflate(R.menu.tasks_sort_menu, menu)
             setOnMenuItemClickListener {

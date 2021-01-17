@@ -29,6 +29,7 @@ class NewTaskFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = newTaskViewModel
         }
+        setHasOptionsMenu(true) // TODO: Add delete menu item when in edit mode
         return dataBinding.root
     }
 

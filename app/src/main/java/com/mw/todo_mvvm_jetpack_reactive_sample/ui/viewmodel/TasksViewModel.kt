@@ -36,6 +36,7 @@ class TasksViewModel @ViewModelInject constructor(
     // retrieve filterType from savedStateHandle, ALL_TASKS is an initial value
     private val _filterType: MutableLiveData<TaskFilterType> =
         savedStateHandle.getLiveData<TaskFilterType>(KEY_TASKS_FILTER_SAVED_STATE, TaskFilterType.ALL_TASKS)
+    val filterType: LiveData<TaskFilterType> = _filterType
 
     private val _sortType: MutableLiveData<TaskSortingType> =
         savedStateHandle.getLiveData(KEY_TASKS_SORT_SAVED_STATE, TaskSortingType.ASCENDING)

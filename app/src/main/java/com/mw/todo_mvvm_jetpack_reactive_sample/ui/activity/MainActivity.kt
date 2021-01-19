@@ -8,7 +8,6 @@ import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.mw.todo_mvvm_jetpack_reactive_sample.R
 import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.ActivityMainBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.utils.NavigationDispatcher
@@ -34,8 +33,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             setupBottomNavigation()
         } // else wait for onRestoreInstanceState
 
-        setSupportActionBar(binding.customToolbar)
-
         navigationDispatcher.navigationCommands.observe(this) { command ->
             Navigation.findNavController(this, R.id.nav_host_fragment).command(this)
             // or: command.invoke(Navigation.findNavController(this, R.id.nav_host_fragment), this)
@@ -54,14 +51,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     ) {
         Timber.d("Destination changed: ${controller.graph}, dest: $destination")
         when (destination.id) {
-            R.id.newTaskFragment -> {
-                binding.bottomNav.isVisible = false
-                supportActionBar?.show()
-            }
-            else -> {
-                binding.bottomNav.isVisible = true
-                supportActionBar?.hide()
-            }
+            R.id.newTaskFragment -> binding.bottomNav.isVisible = false
+            else -> binding.bottomNav.isVisible = true
         }
     }
 
@@ -80,9 +71,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             containerId = R.id.nav_host_fragment,
             intent = intent
         )
-        controller.observe(this) { navController ->
-            // TODO: Add custom toolbar
-            setupActionBarWithNavController(navController)
+        controller.observe(this) {
             currentNavController?.value?.removeOnDestinationChangedListener(this)
             currentNavController = controller
             currentNavController?.value?.addOnDestinationChangedListener(this)

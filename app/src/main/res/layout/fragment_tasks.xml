@@ -62,82 +62,17 @@
                     android:onClick="@{() -> viewModel.showProfile()}"
                     android:contentDescription="@string/account_button_content_description" />
 
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            <LinearLayout
-                android:id="@+id/searchLinearLayout"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/custom_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
-
-                <!-- TODO: styles management and custom view for this search view -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginStart="4dp"
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:endIconMode="clear_text"
-                    android:hint="@string/search_tasks_hint"
-                    app:hintEnabled="true"
-                    app:boxCornerRadiusBottomEnd="16dp"
-                    app:boxCornerRadiusBottomStart="16dp"
-                    app:boxCornerRadiusTopEnd="16dp"
-                    app:boxCornerRadiusTopStart="16dp"
-                    app:startIconDrawable="@drawable/ic_baseline_search_24"
-                    android:layout_weight="0.3">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="text"
-                        android:imeOptions="actionSearch"
-                        android:maxLines="1"
-                        android:drawableStart="@drawable/ic_baseline_search_24"
-                        android:drawablePadding="12dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!--                <SearchView-->
-                <!--                    android:id="@+id/searchView"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:iconifiedByDefault="false"-->
-                <!--                    android:layout_weight="0.3"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@id/logo"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent" />-->
-                <!-- app:queryBackground="@null" // this disables the bottom line -->
-
-                <ImageButton
-                    android:id="@+id/sortingButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_baseline_sort_by_alpha_24"
-                    app:layout_constraintStart_toEndOf="@id/searchView"
-                    app:layout_constraintTop_toTopOf="@id/searchView"
-                    app:layout_constraintBottom_toBottomOf="@id/searchView"
-                    android:contentDescription="@string/sorting_button_content_description" />
-
-                <ImageButton
-                    android:id="@+id/filterButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_baseline_filter_list_24"
-                    app:layout_constraintStart_toEndOf="@id/searchView"
-                    app:layout_constraintTop_toTopOf="@id/searchView"
-                    app:layout_constraintBottom_toBottomOf="@id/searchView"
-                    android:contentDescription="@string/filter_button_content_description" />
-
-            </LinearLayout>
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="4dp"
+                app:title="tasks"
+                android:background="@color/white"
+                android:animateLayoutChanges="false" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -153,7 +88,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:setAdapter="@{tasksAdapter}"
-            tools:listitem="@layout/task_item"
+            tools:listitem="@layout/item_task"
             app:items="@{viewModel.tasks}" />
         <!-- Note here, that setAdapter needs to be above app:items -->
 

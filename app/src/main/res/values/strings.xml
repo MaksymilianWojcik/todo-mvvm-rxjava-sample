@@ -24,7 +24,7 @@
     <!-- New Task -->
     <string name="new_task_label">New Task</string>
     <string name="hint_title">Title</string>
-    <string name="hint_task_description">Task description</string>
+    <string name="hint_task_description">Task description…</string>
     <string name="error_empty_task">Task cannot be empty</string>
     <string name="error_failed_to_save_task">Failed to save task. Please try again</string>
     <string name="task_added_message">Task added</string>

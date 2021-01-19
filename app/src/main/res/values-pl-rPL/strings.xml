@@ -23,7 +23,7 @@
     <!-- New Task -->
     <string name="new_task_label">Nowe zadanie</string>
     <string name="hint_title">Tytuł</string>
-    <string name="hint_task_description">Opis zadania</string>
+    <string name="hint_task_description">Opis zadania…</string>
     <string name="error_empty_task">Wypełnij pola</string>
     <string name="error_failed_to_save_task">Nie udało się zapisać zadania. Spróboj ponownie później</string>
     <string name="task_added_message">Zadanie dodane</string>

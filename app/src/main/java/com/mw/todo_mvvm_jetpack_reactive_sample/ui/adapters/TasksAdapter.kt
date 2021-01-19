@@ -5,17 +5,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
-import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.TaskItemBinding
+import com.mw.todo_mvvm_jetpack_reactive_sample.databinding.ItemTaskBinding
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.TasksViewModel
 
 class TasksAdapter(
     private val viewModel: TasksViewModel
-) : DataBoundListAdapter<Task, TaskItemBinding>(TaskDiffUtilCallback) {
+) : DataBoundListAdapter<Task, ItemTaskBinding>(TaskDiffUtilCallback) {
 
-    override fun createBinding(parent: ViewGroup): TaskItemBinding =
-        TaskItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun createBinding(parent: ViewGroup): ItemTaskBinding =
+        ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-    override fun bind(binding: TaskItemBinding, item: Task) {
+    override fun bind(binding: ItemTaskBinding, item: Task) {
         binding.viewModel = viewModel
         binding.task = item
     }

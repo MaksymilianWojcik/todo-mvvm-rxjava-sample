@@ -71,6 +71,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="4dp"
                 app:title="tasks"
+                tools:menu="@menu/tasks_menu"
                 android:background="@color/white"
                 android:animateLayoutChanges="false" />
 

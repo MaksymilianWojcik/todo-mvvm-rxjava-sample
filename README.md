@@ -1,3 +1,5 @@
+# This app is beeing developed while giving lessons and is a part of upcoming tutorial for "Ktor server + android app"
+
 # TODO list app
 
 This is an app with well known functionality of ToDo list. This example

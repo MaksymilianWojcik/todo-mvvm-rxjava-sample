@@ -1,4 +1,5 @@
 # This app is beeing developed while giving lessons and is a part of upcoming tutorial for "Ktor server + android app"
+As so it might still hold some old code that is currently commented and not whole app is ready yet (styles, cusotm views todo). For this we will clear everything once github actions are set, lint & detekt configures and unit tests covered and ill present the general github flow with PR's etc.
 
 # TODO list app
 

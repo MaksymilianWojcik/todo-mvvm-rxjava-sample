@@ -46,4 +46,7 @@
     <string name="sorting_button_content_description">sorting button content description</string>
     <string name="filter_button_content_description">filter button content description</string>
     <string name="search_tasks_hint">Search tasks</string>
+    <string name="priority_hight">high</string>
+    <string name="priority_medium">medium</string>
+    <string name="priority_low">low</string>
 </resources>

@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"
         android:textSize="24sp"
+        android:textColor="@color/clickable"
         android:textStyle="bold"
         android:text="COMPLETE" />
 
@@ -23,6 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/discoverTV"
         app:layout_constraintStart_toStartOf="@id/discoverTV"
         app:layout_constraintEnd_toStartOf="@id/sportTV"
+        android:textColor="@color/clickable"
         app:layout_constraintBottom_toBottomOf="@id/sportTV"
         android:textSize="16sp"
         android:text="YOUR" />
@@ -35,6 +37,7 @@
         app:layout_constraintStart_toEndOf="@id/theTV"
         app:layout_constraintEnd_toEndOf="@id/discoverTV"
         android:textSize="24sp"
+        android:textColor="@color/clickable"
         android:gravity="center|top|end"
         android:textStyle="bold"
         android:text="TASKS" />

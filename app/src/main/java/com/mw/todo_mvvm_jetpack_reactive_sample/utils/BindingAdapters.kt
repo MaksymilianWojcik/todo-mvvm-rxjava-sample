@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.mw.todo_mvvm_jetpack_reactive_sample.data.model.Task
 import com.mw.todo_mvvm_jetpack_reactive_sample.ui.adapters.TasksAdapter
 
@@ -30,7 +31,7 @@ fun setVisibility(view: View, isVisible: Boolean) {
 // yet defined
 @BindingAdapter("app:setAdapter")
 fun RecyclerView.adapter(adapter: RecyclerView.Adapter<*>) {
-    with (this) {
+    with(this) {
         setHasFixedSize(false)
         this.adapter = adapter
     }
@@ -40,6 +41,21 @@ fun RecyclerView.adapter(adapter: RecyclerView.Adapter<*>) {
 @BindingAdapter("app:items")
 fun setItems(recyclerView: RecyclerView, items: List<Task>) {
     (recyclerView.adapter as TasksAdapter).submitList(items)
+}
+
+
+@BindingAdapter("attachFloatingButton")
+fun bindRecyclerViewWithFab(recyclerView: RecyclerView, fb: ExtendedFloatingActionButton) {
+    recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && fb.isExtended) {
+                fb.shrink()
+            } else if (dy < 0 && !fb.isExtended) {
+                fb.extend()
+            }
+        }
+    })
 }
 
 @Suppress("UNCHECKED_CAST")

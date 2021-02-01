@@ -7,23 +7,28 @@
         android:title="Search"
         android:contentDescription="Search"
         app:showAsAction="collapseActionView|always"
+        android:iconTint="@color/clickable"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
     <item
         android:id="@+id/menu_sort"
         android:title="@string/menu_sort"
         android:icon="@drawable/ic_baseline_sort_by_alpha_24"
+        android:iconTint="@color/clickable"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_filter"
         android:title="@string/menu_filter"
         android:icon="@drawable/ic_baseline_filter_list_24"
+        android:iconTint="@color/clickable"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_clear_completed"
         android:title="@string/menu_clear_completed"
+        android:iconTint="@color/clickable"
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_clear_active"
         android:title="@string/menu_clear_active"
+        android:iconTint="@color/clickable"
         app:showAsAction="never" />
 </menu>

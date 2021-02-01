@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.mw.todo_mvvm_jetpack_reactive_sample.ui.viewmodel.NewTaskViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/background"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/custom_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="4dp"
+                android:animateLayoutChanges="false"
+                android:background="@color/clickable"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/grid_16"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:layout_gravity="center"
+                        android:checked="true"
+                        android:buttonTint="@color/clickable"
+                        android:backgroundTint="@color/clickable"
+                        app:buttonTint="@color/clickable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textSize="20sp"
+                        android:text="@={viewModel.title}"
+                        android:textStyle="bold"
+                        android:hint="Title..." />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/sCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Category"
+                    app:boxStrokeColor="@color/clickable"
+                    app:hintTextColor="@color/clickable"
+                    android:textColorHint="@color/clickable"
+                    android:layout_marginTop="@dimen/grid_16"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/categorySelector"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/grid_16"
+                    app:cardCornerRadius="@dimen/grid_16"
+                    android:background="@color/notes"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:padding="@dimen/grid_16"
+                        android:id="@+id/add_task_description_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:gravity="top"
+                        android:background="@color/yellow"
+                        android:hint="@string/hint_task_description"
+                        android:autofillHints="@string/hint_task_description"
+                        android:text="@={viewModel.description}"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="textMultiLine" />
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save_task_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/grid_16"
+            android:src="@drawable/ic_baseline_check_24"
+            android:onClick="@{() -> viewModel.createTask()}"
+            app:fabSize="normal"
+            android:backgroundTint="@color/clickable"
+            android:enabled="@{viewModel.isFormValid()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/save_task_fab_content_description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

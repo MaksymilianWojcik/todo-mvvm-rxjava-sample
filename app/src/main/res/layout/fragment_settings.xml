@@ -54,6 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/grid_16"
+            android:backgroundTint="@color/clickable"
             tools:text="Sign In"
             android:onClick="@{() -> viewModel.performSignInOut()}"
             android:text="@{context.getString(viewModel.signInOutButtonLabel)}"

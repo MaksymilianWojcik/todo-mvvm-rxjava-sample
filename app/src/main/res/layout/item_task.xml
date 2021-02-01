@@ -21,11 +21,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="10dp"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="2dp"
         android:clickable="true"
         android:focusable="true"
         android:checkable="true"
-        app:cardBackgroundColor="@color/yellow">
+        app:cardBackgroundColor="@color/cards"
+        app:strokeColor="@color/icons"
+        app:strokeWidth="2dp">
         <!-- TODO: color depend on category  -->
 
         <LinearLayout
@@ -37,6 +39,9 @@
                 android:id="@+id/complete_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/clickable"
+                android:backgroundTint="@color/clickable"
+                app:buttonTint="@color/clickable"
                 android:layout_gravity="center_vertical"
                 android:checked="@{task.isCompleted}"
                 android:onClick="@{(view) -> viewModel.changeTaskStatus(task, ((CompoundButton)view).isChecked())}" />
